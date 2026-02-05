@@ -6,13 +6,12 @@
  import AccountModal from './AccountModal';
  import UiKit from "@reef-chain/ui-kit";
  
- interface HeaderProps {
-   balance?: string;
-   accountName?: string;
- }
- 
- const Header = ({ balance = '99,999,702.62', accountName = 'shared' }: HeaderProps) => {
-   const { address, isConnected } = useAccount();
+interface HeaderProps {
+  balance?: string;
+}
+
+const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
+  const { address, isConnected, connector } = useAccount();
    const { connect } = useConnect();
    const { disconnect } = useDisconnect();
    const [showAccountModal, setShowAccountModal] = useState(false);
@@ -41,15 +40,15 @@
               </div>
  
                {/* Account selector */}
-               <Button
-                 variant="ghost"
+              <Button
+                variant="ghost"
                 className="flex items-center gap-2 bg-muted rounded-full px-4 py-2 h-auto hover:bg-muted/80"
-                 onClick={() => setShowAccountModal(true)}
-               >
+                onClick={() => setShowAccountModal(true)}
+              >
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink" />
-                 <span className="text-sm font-medium text-foreground">{accountName}</span>
-                 <ChevronDown className="w-4 h-4 text-muted-foreground" />
-               </Button>
+                <span className="text-sm font-medium text-foreground">Account</span>
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              </Button>
  
                {/* Settings */}
                <Button variant="ghost" size="icon" className="rounded-full">
@@ -67,11 +66,12 @@
          </div>
        </header>
  
-       <AccountModal
-         isOpen={showAccountModal}
-         onClose={() => setShowAccountModal(false)}
-         address={address}
-       />
+      <AccountModal
+        isOpen={showAccountModal}
+        onClose={() => setShowAccountModal(false)}
+        address={address}
+        walletName={connector?.name}
+      />
      </>
    );
  };

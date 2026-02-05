@@ -1,18 +1,19 @@
- import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
- import { Button } from '@/components/ui/button';
- import { Switch } from '@/components/ui/switch';
- import { Copy, ExternalLink, X, Globe } from 'lucide-react';
- import { useToast } from '@/hooks/use-toast';
- import { mockAccount } from '@/lib/mockData';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Copy, ExternalLink } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { mockAccount } from '@/lib/mockData';
  
- interface AccountModalProps {
-   isOpen: boolean;
-   onClose: () => void;
-   address?: string;
- }
- 
- const AccountModal = ({ isOpen, onClose, address }: AccountModalProps) => {
-   const { toast } = useToast();
+interface AccountModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  address?: string;
+  walletName?: string;
+}
+
+const AccountModal = ({ isOpen, onClose, address, walletName }: AccountModalProps) => {
+  const { toast } = useToast();
  
    const copyToClipboard = (text: string, label: string) => {
      navigator.clipboard.writeText(text);
@@ -40,7 +41,7 @@
                 className="rounded-full flex items-center gap-2 border-primary/60 text-primary bg-white/50"
               >
                 <div className="w-4 h-4 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink" />
-                Browser Extension
+                {walletName || 'Connected Wallet'}
               </Button>
             </div>
             <div className="flex items-center gap-2">
@@ -60,7 +61,7 @@
  
                {/* Account Info */}
                <div className="flex-1 min-w-0">
-                 <h4 className="font-semibold text-foreground mb-2">{mockAccount.name}</h4>
+                <h4 className="font-semibold text-foreground mb-2">Account</h4>
  
                 {/* EVM Address */}
                 <div className="flex items-center gap-2 mb-2">
