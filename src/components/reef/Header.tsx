@@ -60,7 +60,7 @@ const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
            ) : (
             <Button
               onClick={() => connect({ connector: metaMask() })}
-              className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white rounded-full px-6"
+              className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white rounded-[12px] px-6"
             >
               Connect Wallet
             </Button>
