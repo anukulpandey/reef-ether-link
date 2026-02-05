@@ -2,6 +2,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
 import Uik from '@reef-chain/ui-kit';
+import BuyReefButton from './BuyReef';
  
  interface PortfolioSummaryProps {
    totalBalance: number;
@@ -52,12 +53,7 @@ import Uik from '@reef-chain/ui-kit';
       </Card>
 
       {/* Buy Reef Card */}
-      <Card className="w-[420px] h-[88px] rounded-[999px] shadow-lg border-0 bg-gradient-to-r from-[#c13aa3] to-[#6a3fb7] text-white flex items-center justify-center">
-        <div className="flex items-center gap-4">
-          <Uik.ReefIcon className="h-8 w-8 text-white" />
-          <span className="text-2xl font-semibold">Buy Reef</span>
-        </div>
-      </Card>
+      <BuyReefButton/>
      </div>
    );
  };
