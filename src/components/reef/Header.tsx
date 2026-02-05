@@ -34,10 +34,8 @@
              <>
                {/* Balance display */}
               <div className="flex items-center gap-3 rounded-full bg-[#f1edf8] px-5 py-3 shadow-sm">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-reef-purple to-reef-pink">
-                  <UiKit.ReefIcon className="h-5 w-5 text-white" />
-                </span>
-                <span className="text-base font-semibold tracking-tight text-[#7a3bbd]">
+                  <UiKit.ReefIcon className="h-6 w-6 text-white" />
+                <span className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-base font-semibold tracking-tight text-transparent">
                   {balance}
                 </span>
               </div>
