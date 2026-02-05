@@ -5,69 +5,55 @@ import UiKit from '@reef-chain/ui-kit';
  
  const ActivityPanel = () => {
    return (
-     <Card className="bg-card rounded-2xl shadow-sm border-0 p-4">
-       <div className="flex items-center justify-between mb-4">
-         <h3 className="font-semibold text-foreground">Activity</h3>
-         <a
-           href="https://testnet.reefscan.com"
-           target="_blank"
-           rel="noopener noreferrer"
-           className="text-sm text-primary hover:underline flex items-center gap-1"
-         >
-           Open Explorer
-           <ExternalLink className="w-3 h-3" />
-         </a>
-       </div>
- 
-       <div className="space-y-3">
-         {mockTransactions.map((tx) => (
-           <div
-             key={tx.id}
-             className="flex items-center justify-between py-2 border-b border-border last:border-0"
-           >
-             <div className="flex items-center gap-3">
-               <div
-                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                   tx.type === 'sent'
-                     ? 'bg-red-100 text-red-500'
-                     : 'bg-green-100 text-green-500'
-                 }`}
-               >
-                 {tx.type === 'sent' ? (
-                   <ArrowUpRight className="w-4 h-4" />
-                 ) : (
-                   <ArrowDownLeft className="w-4 h-4" />
-                 )}
-               </div>
-               <div>
-                 <p className="text-sm font-medium text-foreground capitalize">{tx.type}</p>
-                 <p className="text-xs text-muted-foreground">
-                   {tx.date} · {tx.time}
-                 </p>
-               </div>
-             </div>
- 
-             <div className="flex items-center gap-2">
-               <span className={`text-sm font-medium ${tx.type === 'sent' ? 'text-red-500' : 'text-green-500'}`}>
-                 {tx.type === 'sent' ? '-' : '+'}{tx.amount} {tx.symbol}
-               </span>
-              <div
-                className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                  tx.icon === 'reef'
-                    ? 'bg-muted/40'
-                    : 'bg-gradient-to-br from-reef-purple to-reef-pink'
-                }`}
-              >
-                {tx.icon === 'reef' ? (
-                  <UiKit.ReefIcon className="h-4 w-4 text-[#7a3bbd]" />
-                ) : (
-                  <span className="text-xs">{tx.icon}</span>
-                )}
+    <Card className="bg-transparent rounded-2xl border-0 p-0 shadow-none">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-2xl font-medium text-[#1b1530]">Activity</h3>
+        <a
+          href="https://testnet.reefscan.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full bg-[#efe7f6] px-5 py-2 text-sm font-semibold text-[#b13c8e]"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Open Explorer
+        </a>
+      </div>
+
+      <div className="rounded-3xl bg-white shadow-sm border border-[#ebe6f4]">
+        {mockTransactions.map((tx, index) => (
+          <div key={tx.id}>
+            <div className="flex items-center justify-between px-6 py-5">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#eef0f5] flex items-center justify-center">
+                  {tx.type === 'sent' ? (
+                    <ArrowUpRight className="w-6 h-6 text-[#a8a4b3]" />
+                  ) : (
+                    <ArrowDownLeft className="w-6 h-6 text-[#a8a4b3]" />
+                  )}
+                </div>
+                <div>
+                  <p className="text-base font-semibold text-[#1b1530]">
+                    {tx.type === 'sent' ? 'Sent REEF' : 'Received REEF'}
+                  </p>
+                  <p className="text-sm text-[#8e899c]">
+                    {tx.date} · {tx.time}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-lg font-semibold text-[#a8a4b3]">
+                  {tx.type === 'sent' ? '-' : '+'}{tx.amount}
+                </span>
+                <UiKit.ReefIcon className="h-5 w-5 text-[#b08ac8]/70" />
               </div>
             </div>
+            {index < mockTransactions.length - 1 && (
+              <div className="mx-6 h-px bg-[#ebe6f4]" />
+            )}
           </div>
         ))}
-       </div>
+      </div>
      </Card>
    );
  };
