@@ -43,13 +43,6 @@
                 Browser Extension
               </Button>
             </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Globe className="w-4 h-4" />
-              Choose Language
-            </div>
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">Mainnet</span>
               <Switch />
@@ -59,7 +52,7 @@
         </div>
 
         {/* Account Card */}
-        <div className="p-6">
+        <div className="px-6 pb-6 pt-3">
           <div className="bg-white/70 rounded-2xl p-6 shadow-sm">
             <div className="flex items-start gap-5">
               {/* Avatar */}
