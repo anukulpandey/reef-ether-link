@@ -34,7 +34,7 @@ import BuyReefButton from './BuyReef';
       {/* Balance Card */}
       <Card className="flex-1 p-6 bg-transparent rounded-2xl shadow-none border-0">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-base font-semibold text-[#2a2440]">Balance</span>
+          <span className="text-lg font-semibold text-[#2a2440]">Balance</span>
           <button
             onClick={toggleBalances}
             className="text-[#7d7790] hover:text-[#5f5a70] transition-colors"
