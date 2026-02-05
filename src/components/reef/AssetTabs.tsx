@@ -7,20 +7,20 @@ import { Sparkles } from 'lucide-react';
  const AssetTabs = () => {
    return (
      <Tabs defaultValue="tokens" className="w-full">
-       <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-4 h-auto p-0 mb-4">
-         <TabsTrigger
-           value="tokens"
-           className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
-         >
-           Tokens
-         </TabsTrigger>
+      <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-4 h-auto p-0 mb-4">
+        <TabsTrigger
+          value="tokens"
+          className="text-lg rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
+        >
+          Tokens
+        </TabsTrigger>
         <TabsTrigger
           value="nfts"
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
+          className="text-lg rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
         >
           NFTs
         </TabsTrigger>
-       </TabsList>
+      </TabsList>
  
        <TabsContent value="tokens">
          <TokenList />
@@ -32,11 +32,11 @@ import { Sparkles } from 'lucide-react';
             Your wallet doesn't own any NFTs.
           </p>
           <Button
-            className="rounded-[999px] px-12 py-7 text-lg font-semibold bg-gradient-to-b from-[#0f63e3] to-[#0a3fae] text-white shadow-xl hover:opacity-95"
+            className="rounded-[18px] px-12 py-7 text-lg font-semibold bg-gradient-to-b from-[#0f63e3] to-[#0a3fae] text-white shadow-[0_12px_24px_rgba(10,63,174,0.28)] hover:opacity-95"
             asChild
           >
             <a href="https://sqwid.app" target="_blank" rel="noopener noreferrer">
-              <span className="mr-4 flex h-9 w-9 items-center justify-center">
+              <span className="mr-4 flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/70">
                 <Sparkles className="h-6 w-6" />
               </span>
               Get NFTs on Sqwid
