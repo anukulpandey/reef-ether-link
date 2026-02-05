@@ -36,7 +36,7 @@ import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
    return (
      <>
       <Card className="bg-transparent rounded-2xl shadow-none border-0 overflow-hidden">
-        <div className="space-y-4">
+        <div className="space-y-2">
           {mockTokens.map((token) => (
             <div
               key={token.id}
