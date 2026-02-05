@@ -9,11 +9,12 @@ import Uik from '@reef-chain/ui-kit';
 interface AccountModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onLogout?: () => void;
   address?: string;
   walletName?: string;
 }
 
-const AccountModal = ({ isOpen, onClose, address, walletName }: AccountModalProps) => {
+const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: AccountModalProps) => {
   const { toast } = useToast();
  
    const copyToClipboard = (text: string, label: string) => {
@@ -97,9 +98,12 @@ const AccountModal = ({ isOpen, onClose, address, walletName }: AccountModalProp
 
             <Button
               className="w-full mt-6 bg-gradient-to-r from-reef-purple to-reef-pink text-white rounded-full py-6 text-base"
-              onClick={onClose}
+              onClick={() => {
+                onLogout?.();
+                onClose();
+              }}
             >
-              Select
+              Logout
             </Button>
           </div>
         </div>

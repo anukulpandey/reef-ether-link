@@ -1,6 +1,6 @@
  import { Settings, ChevronDown } from 'lucide-react';
  import { Button } from '@/components/ui/button';
-import { useAccount, useConnect } from 'wagmi';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { metaMask } from 'wagmi/connectors';
 import { useState } from 'react';
 import AccountModal from './AccountModal';
@@ -14,6 +14,7 @@ interface HeaderProps {
 const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
   const { address, isConnected, connector } = useAccount();
   const { connect } = useConnect();
+  const { disconnect } = useDisconnect();
    const [showAccountModal, setShowAccountModal] = useState(false);
   const { showBalances } = useBalanceVisibility();
  
@@ -72,6 +73,7 @@ const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
         onClose={() => setShowAccountModal(false)}
         address={address}
         walletName={connector?.name}
+        onLogout={disconnect}
       />
      </>
    );
