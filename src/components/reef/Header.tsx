@@ -26,19 +26,6 @@
            <div className="flex items-center gap-2">
              <UiKit.ReefLogo />
            </div>
- 
-           {/* Navigation */}
-           <nav className="flex items-center gap-6">
-             <button className="text-sm font-medium text-primary border-b-2 border-primary pb-1">
-               Dashboard
-             </button>
-             <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-               Bonds
-             </button>
-             <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-               Validators
-             </button>
-           </nav>
          </div>
  
          {/* Right side - Wallet info */}
@@ -46,12 +33,14 @@
            {isConnected ? (
              <>
                {/* Balance display */}
-               <div className="flex items-center gap-2 bg-muted rounded-full px-4 py-2">
-                 <div className="w-5 h-5 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
-                   <span className="text-xs text-white">🌊</span>
-                 </div>
-                 <span className="text-sm font-medium text-foreground">{balance}</span>
-               </div>
+              <div className="flex items-center gap-3 rounded-full bg-[#f1edf8] px-5 py-3 shadow-sm">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-reef-purple to-reef-pink">
+                  <UiKit.ReefIcon className="h-5 w-5 text-white" />
+                </span>
+                <span className="text-base font-semibold tracking-tight text-[#7a3bbd]">
+                  {balance}
+                </span>
+              </div>
  
                {/* Account selector */}
                <Button
