@@ -11,9 +11,9 @@
      symbol: 'REEF',
    },
    rpcUrls: {
-     default: {
-       http: ['http://reeftestnet1-reefethrpc-dab87f-72-60-35-83.traefik.me/'],
-     },
+    default: {
+      http: ['http://34.123.142.246:8545/'],
+    },
    },
    blockExplorers: {
      default: { name: 'Reef Explorer', url: 'https://testnet.reefscan.com' },
