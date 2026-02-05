@@ -4,6 +4,7 @@ import { Switch } from '@/components/ui/switch';
 import { Copy, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { mockAccount } from '@/lib/mockData';
+import Uik from '@reef-chain/ui-kit';
  
 interface AccountModalProps {
   isOpen: boolean;
@@ -90,7 +91,7 @@ const AccountModal = ({ isOpen, onClose, address, walletName }: AccountModalProp
  
                {/* QR Code placeholder */}
               <div className="w-20 h-20 bg-white rounded-2xl border border-white/70 shadow-sm flex items-center justify-center">
-                <div className="w-14 h-14 bg-foreground/10 rounded-lg" />
+                <Uik.QRCode value={address || mockAccount.evmAddress} className="w-14 h-14" />
               </div>
             </div>
 
