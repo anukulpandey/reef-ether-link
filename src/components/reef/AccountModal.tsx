@@ -28,42 +28,42 @@
    };
  
    return (
-     <Dialog open={isOpen} onOpenChange={onClose}>
-       <DialogContent className="max-w-md bg-card rounded-2xl border-0 p-0 overflow-hidden">
-         {/* Header */}
-         <div className="p-4 border-b border-border">
-           <div className="flex items-center justify-between mb-4">
-             <div className="flex items-center gap-2">
-               <Button
-                 variant="outline"
-                 size="sm"
-                 className="rounded-full flex items-center gap-2 border-primary text-primary"
-               >
-                 <div className="w-4 h-4 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink" />
-                 Browser Extension
-               </Button>
-             </div>
-           </div>
- 
-           <div className="flex items-center justify-between">
-             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-               <Globe className="w-4 h-4" />
-               Choose Language
-             </div>
-             <div className="flex items-center gap-2">
-               <span className="text-sm text-muted-foreground">Mainnet</span>
-               <Switch />
-               <span className="text-sm font-medium text-primary">Testnet</span>
-             </div>
-           </div>
-         </div>
- 
-         {/* Account Card */}
-         <div className="p-4">
-           <div className="bg-muted rounded-xl p-4">
-             <div className="flex items-start gap-4">
-               {/* Avatar */}
-              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-reef-purple via-reef-pink to-accent flex-shrink-0" />
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl bg-[#f6f3fb] rounded-3xl border-0 p-0 overflow-hidden shadow-2xl">
+        {/* Header */}
+        <div className="p-6 border-b border-white/60">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full flex items-center gap-2 border-primary/60 text-primary bg-white/50"
+              >
+                <div className="w-4 h-4 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink" />
+                Browser Extension
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Globe className="w-4 h-4" />
+              Choose Language
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Mainnet</span>
+              <Switch />
+              <span className="text-sm font-medium text-primary">Testnet</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Account Card */}
+        <div className="p-6">
+          <div className="bg-white/70 rounded-2xl p-6 shadow-sm">
+            <div className="flex items-start gap-5">
+              {/* Avatar */}
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-reef-purple via-reef-pink to-accent flex-shrink-0" />
  
                {/* Account Info */}
                <div className="flex-1 min-w-0">
@@ -109,20 +109,20 @@
                </div>
  
                {/* QR Code placeholder */}
-               <div className="w-16 h-16 bg-card rounded-lg border border-border flex items-center justify-center">
-                 <div className="w-12 h-12 bg-foreground/10 rounded" />
-               </div>
-             </div>
- 
-             <Button
-               className="w-full mt-4 bg-gradient-to-r from-reef-purple to-reef-pink text-white rounded-full"
-               onClick={onClose}
-             >
-               Select
-             </Button>
-           </div>
-         </div>
-       </DialogContent>
+              <div className="w-20 h-20 bg-white rounded-2xl border border-white/70 shadow-sm flex items-center justify-center">
+                <div className="w-14 h-14 bg-foreground/10 rounded-lg" />
+              </div>
+            </div>
+
+            <Button
+              className="w-full mt-6 bg-gradient-to-r from-reef-purple to-reef-pink text-white rounded-full py-6 text-base"
+              onClick={onClose}
+            >
+              Select
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
      </Dialog>
    );
  };
