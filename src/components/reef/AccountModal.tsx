@@ -32,8 +32,8 @@ const AccountModal = ({ isOpen, onClose, address, walletName }: AccountModalProp
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl bg-[#f6f3fb] rounded-3xl border-0 p-0 overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="p-6 border-b border-white/60">
-          <div className="flex items-center justify-between mb-5">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
@@ -53,7 +53,7 @@ const AccountModal = ({ isOpen, onClose, address, walletName }: AccountModalProp
         </div>
 
         {/* Account Card */}
-        <div className="px-6 pb-6 pt-3">
+        <div className="px-6 pb-6 pt-0">
           <div className="bg-white/70 rounded-2xl p-6 shadow-sm">
             <div className="flex items-start gap-5">
               {/* Avatar */}
