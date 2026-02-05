@@ -1,6 +1,6 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { useState } from 'react';
+import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
 import Uik from '@reef-chain/ui-kit';
  
  interface PortfolioSummaryProps {
@@ -14,7 +14,7 @@ import Uik from '@reef-chain/ui-kit';
    availableBalance = 158499.53,
    stakedBalance = 0.00,
  }: PortfolioSummaryProps) => {
-   const [showBalance, setShowBalance] = useState(true);
+  const { showBalances, toggleBalances } = useBalanceVisibility();
  
    const formatCurrency = (value: number) => {
      return new Intl.NumberFormat('en-US', {
@@ -24,9 +24,9 @@ import Uik from '@reef-chain/ui-kit';
      }).format(value);
    };
  
-   const hideValue = (value: string) => {
-     return showBalance ? value : '••••••';
-   };
+  const hideValue = (value: string) => {
+    return showBalances ? value : '••••••';
+  };
  
    return (
     <div className="flex items-center gap-6">
@@ -35,10 +35,10 @@ import Uik from '@reef-chain/ui-kit';
         <div className="flex items-center gap-2 mb-1">
           <span className="text-base font-semibold text-[#2a2440]">Balance</span>
           <button
-            onClick={() => setShowBalance(!showBalance)}
+            onClick={toggleBalances}
             className="text-[#7d7790] hover:text-[#5f5a70] transition-colors"
           >
-            {showBalance ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            {showBalances ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
           </button>
         </div>
 

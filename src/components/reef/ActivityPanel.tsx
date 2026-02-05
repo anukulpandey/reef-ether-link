@@ -2,9 +2,11 @@ import { ArrowUpRight, ArrowDownLeft, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { mockTransactions } from '@/lib/mockData';
 import UiKit from '@reef-chain/ui-kit';
+import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
  
- const ActivityPanel = () => {
-   return (
+const ActivityPanel = () => {
+  const { showBalances } = useBalanceVisibility();
+  return (
     <Card className="bg-transparent rounded-2xl border-0 p-0 shadow-none">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-semibold text-[#1b1530]">Activity</h3>
@@ -43,9 +45,9 @@ import UiKit from '@reef-chain/ui-kit';
 
               <div className="flex items-center gap-3">
                 <span className="text-base font-semibold text-[#a8a4b3]">
-                  {tx.type === 'sent' ? '-' : '+'}{tx.amount}
+                  {showBalances ? `${tx.type === 'sent' ? '-' : '+'}${tx.amount}` : '••••••'}
                 </span>
-                <UiKit.ReefIcon className="h-5 w-5 text-[#b08ac8]/70" />
+                {showBalances && <UiKit.ReefIcon className="h-5 w-5 text-[#b08ac8]/70" />}
               </div>
             </div>
             {index < mockTransactions.length - 1 && (

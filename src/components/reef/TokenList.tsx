@@ -1,14 +1,16 @@
  import { Button } from '@/components/ui/button';
  import { Card } from '@/components/ui/card';
 import { ArrowUpRight, Coins } from 'lucide-react';
- import { mockTokens, type Token } from '@/lib/mockData';
+import { mockTokens, type Token } from '@/lib/mockData';
 import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
- import SendModal from './SendModal';
+import SendModal from './SendModal';
+import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
  
  const TokenList = () => {
-   const [sendModalOpen, setSendModalOpen] = useState(false);
-   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
+  const [sendModalOpen, setSendModalOpen] = useState(false);
+  const [selectedToken, setSelectedToken] = useState<Token | null>(null);
+  const { showBalances } = useBalanceVisibility();
  
    const handleSend = (token: Token) => {
      setSelectedToken(token);
@@ -61,10 +63,10 @@ import UiKit from '@reef-chain/ui-kit';
               <div className="flex items-center gap-5">
                 <div className="text-right">
                   <p className="text-xl font-semibold bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent">
-                    ${formatNumber(token.usdValue)}
+                    {showBalances ? `$${formatNumber(token.usdValue)}` : '••••••'}
                   </p>
                   <p className="text-sm font-medium text-[#1b1530]">
-                    {formatNumber(token.balance)} {token.symbol}
+                    {showBalances ? `${formatNumber(token.balance)} ${token.symbol}` : '••••••'}
                   </p>
                 </div>
 

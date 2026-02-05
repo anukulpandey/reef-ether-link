@@ -2,9 +2,10 @@
  import { Button } from '@/components/ui/button';
  import { Input } from '@/components/ui/input';
  import { Label } from '@/components/ui/label';
- import { useToast } from '@/hooks/use-toast';
- import { useState } from 'react';
- import { type Token } from '@/lib/mockData';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
+import { type Token } from '@/lib/mockData';
+import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
  
  interface SendModalProps {
    isOpen: boolean;
@@ -12,10 +13,11 @@
    token: Token | null;
  }
  
- const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
-   const { toast } = useToast();
-   const [recipient, setRecipient] = useState('');
-   const [amount, setAmount] = useState('');
+const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
+  const { toast } = useToast();
+  const [recipient, setRecipient] = useState('');
+  const [amount, setAmount] = useState('');
+  const { showBalances } = useBalanceVisibility();
  
    const handleSend = () => {
      toast({
@@ -80,9 +82,9 @@
                  MAX
                </Button>
              </div>
-             <p className="text-xs text-muted-foreground">
-               Balance: {token.balance.toLocaleString()} {token.symbol}
-             </p>
+            <p className="text-xs text-muted-foreground">
+              Balance: {showBalances ? `${token.balance.toLocaleString()} ${token.symbol}` : '••••••'}
+            </p>
            </div>
  
            {/* Actions */}
