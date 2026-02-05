@@ -46,9 +46,9 @@ const Index = () => {
                 
                 <UiKit.ReefIcon className="h-10 w-10 text-[#7a3bbd] relative z-10" />
               </div>
-              <h2 className="text-3xl font-semibold text-[#1b1530]">Welcome to Reef Wallet</h2>
+              <h2 className="text-3xl font-semibold text-[#1b1530]">Connect to Reef App</h2>
               <p className="mt-2 text-base text-[#8e899c]">
-                Connect your wallet to view balances, activity, and manage your assets.
+                Connect MetaMask to view balances, activity, and manage your assets.
               </p>
               <div className="mt-6 flex items-center gap-3 text-sm text-[#8e899c]">
                 <span className="rounded-full bg-white/70 px-3 py-1">Secure</span>
@@ -56,7 +56,7 @@ const Index = () => {
                 <span className="rounded-full bg-white/70 px-3 py-1">Testnet ready</span>
               </div>
             </div>
-            <UiKit.Bubbles amount={10} delay={0.2} className="absolute inset-0 opacity-60" />
+            <UiKit.Bubbles className="absolute inset-0 opacity-60" />
           </div>
         )}
       </main>

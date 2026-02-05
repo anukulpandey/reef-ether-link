@@ -58,12 +58,12 @@ const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
                </Button>
              </>
            ) : (
-             <Button
-               onClick={() => connect({ connector: metaMask() })}
-               className="bg-gradient-to-r from-reef-purple to-reef-pink text-white rounded-full px-6"
-             >
-               Connect Wallet
-             </Button>
+            <Button
+              onClick={() => connect({ connector: metaMask() })}
+              className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white rounded-full px-6"
+            >
+              Connect Wallet
+            </Button>
            )}
          </div>
        </header>
