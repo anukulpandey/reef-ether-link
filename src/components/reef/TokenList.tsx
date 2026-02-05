@@ -38,7 +38,7 @@ import UiKit from '@reef-chain/ui-kit';
           {mockTokens.map((token) => (
             <div
               key={token.id}
-              className="flex items-center justify-between rounded-2xl bg-white px-5 py-4 shadow-sm border border-[#ebe6f4]"
+              className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 shadow-sm border border-[#ebe6f4] w-[92%]"
             >
               {/* Token info */}
               <div className="flex items-center gap-4">
