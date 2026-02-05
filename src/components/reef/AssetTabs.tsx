@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
  import TokenList from './TokenList';
+import SqwidButton from './SqwidBtn';
  
  const AssetTabs = () => {
    return (
@@ -31,17 +32,7 @@ import { Sparkles } from 'lucide-react';
           <p className="text-lg font-semibold text-[#8f8a9b]">
             Your wallet doesn't own any NFTs.
           </p>
-          <Button
-            className="rounded-[18px] px-12 py-8 text-lg font-semibold bg-gradient-to-b from-[#0f63e3] to-[#0a3fae] text-white shadow-[0_12px_24px_rgba(10,63,174,0.28)] transition-transform duration-200 hover:scale-[1.03] hover:opacity-95"
-            asChild
-          >
-            <a href="https://sqwid.app" target="_blank" rel="noopener noreferrer">
-              <span className="mr-4 flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/70">
-                <Sparkles className="h-6 w-6" />
-              </span>
-              Get NFTs on Sqwid
-            </a>
-          </Button>
+          <SqwidButton />
         </div>
       </TabsContent>
      </Tabs>
