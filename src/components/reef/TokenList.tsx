@@ -1,6 +1,6 @@
  import { Button } from '@/components/ui/button';
  import { Card } from '@/components/ui/card';
-import { ArrowUpRight, Coins } from 'lucide-react';
+import { FaPaperPlane } from 'react-icons/fa';
 import { mockTokens, type Token } from '@/lib/mockData';
 import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
@@ -73,11 +73,11 @@ import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
                 <div className="flex items-center gap-3">
                   <Button
                     size="sm"
-                    className="rounded-[18px] px-6 py-5 text-white bg-[#8f2fb4] shadow-md hover:bg-[#7d29a0]"
+                    className="rounded-[12px] px-6 py-5 text-white bg-[#8f2fb4] shadow-md hover:bg-[#7d29a0] gap-2"
                     onClick={() => handleSend(token)}
                   >
+                    <FaPaperPlane className="h-4 w-4" />
                     Send
-                    <ArrowUpRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
               </div>
