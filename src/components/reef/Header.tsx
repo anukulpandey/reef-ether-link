@@ -1,4 +1,4 @@
- import { Settings, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
  import { Button } from '@/components/ui/button';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { metaMask } from 'wagmi/connectors';
@@ -52,10 +52,6 @@ const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
                 <ChevronDown className="w-4 h-4 text-muted-foreground" />
               </Button>
  
-               {/* Settings */}
-               <Button variant="ghost" size="icon" className="rounded-full">
-                 <Settings className="w-5 h-5 text-muted-foreground" />
-               </Button>
              </>
            ) : (
             <Button
