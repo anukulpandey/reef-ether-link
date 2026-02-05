@@ -13,28 +13,16 @@
          >
            Tokens
          </TabsTrigger>
-         <TabsTrigger
-           value="bonds"
-           className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
-         >
-           Bonds
-         </TabsTrigger>
-         <TabsTrigger
-           value="nfts"
-           className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
-         >
-           NFTs
-         </TabsTrigger>
+        <TabsTrigger
+          value="nfts"
+          className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
+        >
+          NFTs
+        </TabsTrigger>
        </TabsList>
  
        <TabsContent value="tokens">
          <TokenList />
-       </TabsContent>
- 
-       <TabsContent value="bonds">
-         <Card className="bg-card rounded-2xl shadow-sm border-0 p-8 text-center">
-           <p className="text-muted-foreground">No bonds available</p>
-         </Card>
        </TabsContent>
  
        <TabsContent value="nfts">
