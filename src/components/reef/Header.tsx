@@ -4,6 +4,7 @@
  import { metaMask } from 'wagmi/connectors';
  import { useState } from 'react';
  import AccountModal from './AccountModal';
+ import UiKit from "@reef-chain/ui-kit";
  
  interface HeaderProps {
    balance?: string;
@@ -18,15 +19,12 @@
  
    return (
      <>
-       <header className="flex items-center justify-between px-6 py-4 bg-card border-b border-border">
+       <header className="flex items-center justify-between px-6 py-4 bg-card border-b border-border bg-[#f2f0f8]">
          {/* Left side - Logo and Nav */}
          <div className="flex items-center gap-8">
            {/* Reef Logo */}
            <div className="flex items-center gap-2">
-             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
-               <span className="text-white text-lg">🌊</span>
-             </div>
-             <span className="text-xl font-bold text-foreground">reef</span>
+             <UiKit.ReefLogo />
            </div>
  
            {/* Navigation */}
