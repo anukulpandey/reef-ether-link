@@ -10,13 +10,13 @@ import { Sparkles } from 'lucide-react';
       <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-4 h-auto p-0 mb-4">
         <TabsTrigger
           value="tokens"
-          className="text-lg rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
+          className="text-base font-semibold rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
         >
           Tokens
         </TabsTrigger>
         <TabsTrigger
           value="nfts"
-          className="text-lg rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
+          className="text-base font-semibold rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3"
         >
           NFTs
         </TabsTrigger>

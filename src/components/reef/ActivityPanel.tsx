@@ -7,7 +7,7 @@ import UiKit from '@reef-chain/ui-kit';
    return (
     <Card className="bg-transparent rounded-2xl border-0 p-0 shadow-none">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-medium text-[#1b1530]">Activity</h3>
+        <h3 className="text-xl font-semibold text-[#1b1530]">Activity</h3>
         <a
           href="https://testnet.reefscan.com"
           target="_blank"
@@ -35,14 +35,14 @@ import UiKit from '@reef-chain/ui-kit';
                   <p className="text-base font-semibold text-[#1b1530]">
                     {tx.type === 'sent' ? 'Sent REEF' : 'Received REEF'}
                   </p>
-                  <p className="text-sm text-[#8e899c]">
+                  <p className="text-sm font-medium text-[#8e899c]">
                     {tx.date} · {tx.time}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="text-lg font-semibold text-[#a8a4b3]">
+                <span className="text-base font-semibold text-[#a8a4b3]">
                   {tx.type === 'sent' ? '-' : '+'}{tx.amount}
                 </span>
                 <UiKit.ReefIcon className="h-5 w-5 text-[#b08ac8]/70" />

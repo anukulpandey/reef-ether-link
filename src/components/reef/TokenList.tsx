@@ -56,25 +56,25 @@ import UiKit from '@reef-chain/ui-kit';
                   )}
                 </div>
                  <div>
-                   <div className="flex items-center gap-2">
-                     <span className="font-medium text-foreground">{token.name}</span>
-                     <span className="text-xs text-muted-foreground">{token.symbol}</span>
-                   </div>
-                   <div className="flex items-center gap-2">
-                     <span className="text-sm text-muted-foreground">{formatPrice(token.price)}</span>
-                     <span className={`text-xs ${token.priceChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                       {token.priceChange >= 0 ? '+' : ''}{token.priceChange}%
-                     </span>
-                   </div>
-                 </div>
-               </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-base font-semibold text-foreground">{token.name}</span>
+                    <span className="text-xs font-medium text-muted-foreground">{token.symbol}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-muted-foreground">{formatPrice(token.price)}</span>
+                    <span className={`text-xs font-medium ${token.priceChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {token.priceChange >= 0 ? '+' : ''}{token.priceChange}%
+                    </span>
+                  </div>
+                </div>
+              </div>
  
                {/* Balance and actions */}
                <div className="flex items-center gap-6">
-                 <div className="text-right">
-                   <p className="font-medium text-foreground">${formatNumber(token.usdValue)}</p>
-                   <p className="text-sm text-muted-foreground">{formatNumber(token.balance)}</p>
-                 </div>
+                <div className="text-right">
+                  <p className="text-base font-semibold text-foreground">${formatNumber(token.usdValue)}</p>
+                  <p className="text-sm font-medium text-muted-foreground">{formatNumber(token.balance)}</p>
+                </div>
  
                 <div className="flex items-center gap-2">
                   <Button
