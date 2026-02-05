@@ -1,10 +1,10 @@
  import { Settings, ChevronDown } from 'lucide-react';
  import { Button } from '@/components/ui/button';
- import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
  import { metaMask } from 'wagmi/connectors';
  import { useState } from 'react';
  import AccountModal from './AccountModal';
- import UiKit from "@reef-chain/ui-kit";
+import UiKit from "@reef-chain/ui-kit";
  
 interface HeaderProps {
   balance?: string;
@@ -12,13 +12,12 @@ interface HeaderProps {
 
 const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
   const { address, isConnected, connector } = useAccount();
-   const { connect } = useConnect();
-   const { disconnect } = useDisconnect();
+  const { connect } = useConnect();
    const [showAccountModal, setShowAccountModal] = useState(false);
  
    return (
      <>
-       <header className="flex items-center justify-between px-6 py-4 bg-card border-b border-border bg-[#f2f0f8]">
+      <header className="flex items-center justify-between px-6 py-3 bg-card border-b border-border bg-[#f2f0f8]">
          {/* Left side - Logo and Nav */}
          <div className="flex items-center gap-8">
            {/* Reef Logo */}
