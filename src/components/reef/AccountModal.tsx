@@ -62,25 +62,11 @@
                <div className="flex-1 min-w-0">
                  <h4 className="font-semibold text-foreground mb-2">{mockAccount.name}</h4>
  
-                 {/* Native Address */}
-                 <div className="flex items-center gap-2 mb-1">
-                   <span className="text-xs text-muted-foreground">Native:</span>
-                   <span className="text-xs font-mono text-foreground">
-                     {truncateAddress(mockAccount.nativeAddress, 20, 3)}
-                   </span>
-                   <button
-                     onClick={() => copyToClipboard(mockAccount.nativeAddress, 'Native address')}
-                     className="text-muted-foreground hover:text-foreground"
-                   >
-                     <Copy className="w-3 h-3" />
-                   </button>
-                 </div>
- 
-                 {/* EVM Address */}
-                 <div className="flex items-center gap-2 mb-2">
-                   <span className="text-xs text-muted-foreground">EVM:</span>
-                   <span className="text-xs font-mono text-foreground">
-                     {address ? truncateAddress(address) : truncateAddress(mockAccount.evmAddress)}
+                {/* EVM Address */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-muted-foreground">EVM:</span>
+                  <span className="text-xs font-mono text-foreground">
+                    {address ? truncateAddress(address) : truncateAddress(mockAccount.evmAddress)}
                    </span>
                    <button
                      onClick={() => copyToClipboard(address || mockAccount.evmAddress, 'EVM address')}
