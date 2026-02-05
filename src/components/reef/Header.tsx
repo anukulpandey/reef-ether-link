@@ -33,7 +33,7 @@ const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
              <>
                {/* Balance display */}
               <div className="flex items-center gap-3 rounded-full bg-[#f1edf8] px-5 py-3 shadow-sm">
-                  <UiKit.ReefIcon className="h-6 w-6 text-white" />
+                <UiKit.ReefIcon className="h-7 w-7 text-[#7a3bbd]" />
                 <span className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-base font-semibold tracking-tight text-transparent">
                   {balance}
                 </span>

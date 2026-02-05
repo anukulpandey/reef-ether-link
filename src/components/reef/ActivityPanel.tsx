@@ -51,9 +51,15 @@ import UiKit from '@reef-chain/ui-kit';
                <span className={`text-sm font-medium ${tx.type === 'sent' ? 'text-red-500' : 'text-green-500'}`}>
                  {tx.type === 'sent' ? '-' : '+'}{tx.amount} {tx.symbol}
                </span>
-              <div className="w-5 h-5 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
+              <div
+                className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                  tx.icon === 'reef'
+                    ? 'bg-muted/40'
+                    : 'bg-gradient-to-br from-reef-purple to-reef-pink'
+                }`}
+              >
                 {tx.icon === 'reef' ? (
-                  <UiKit.ReefIcon className="h-3 w-3 text-white" />
+                  <UiKit.ReefIcon className="h-4 w-4 text-[#7a3bbd]" />
                 ) : (
                   <span className="text-xs">{tx.icon}</span>
                 )}

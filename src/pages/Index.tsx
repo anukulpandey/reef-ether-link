@@ -39,8 +39,8 @@ const Index = () => {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center mb-6">
-              <UiKit.ReefIcon className="h-12 w-12 text-white" />
+            <div className="w-24 h-24 rounded-full bg-muted/40 flex items-center justify-center mb-6">
+              <UiKit.ReefIcon className="h-14 w-14 text-[#7a3bbd]" />
             </div>
             <h2 className="text-2xl font-bold text-foreground mb-2">Welcome to Reef</h2>
             <p className="text-muted-foreground mb-6">Connect your wallet to get started</p>

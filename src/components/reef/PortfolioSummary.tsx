@@ -75,7 +75,7 @@ import UiKit from '@reef-chain/ui-kit';
          
          <div className="relative z-10">
           <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mb-4">
-            <UiKit.ReefIcon className="h-5 w-5 text-white" />
+            <UiKit.ReefIcon className="h-6 w-6 text-white" />
           </div>
            <h3 className="text-xl font-bold mb-2">Buy Reef</h3>
            <p className="text-sm text-white/80">

@@ -42,9 +42,15 @@ import UiKit from '@reef-chain/ui-kit';
              >
                {/* Token info */}
                <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    token.icon === 'reef'
+                      ? 'bg-muted/40'
+                      : 'bg-gradient-to-br from-reef-purple to-reef-pink'
+                  }`}
+                >
                   {token.icon === 'reef' ? (
-                    <UiKit.ReefIcon className="h-5 w-5 text-white" />
+                    <UiKit.ReefIcon className="h-6 w-6 text-[#7a3bbd]" />
                   ) : (
                     <span className="text-lg">{token.icon}</span>
                   )}
