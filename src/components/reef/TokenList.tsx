@@ -42,16 +42,16 @@ import UiKit from '@reef-chain/ui-kit';
             >
               {/* Token info */}
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#a12fc5] flex items-center justify-center shadow-sm">
+                <div className="w-12 h-12 flex items-center justify-center">
                   {token.icon === 'reef' ? (
-                    <UiKit.ReefIcon className="h-6 w-6 text-white" />
+                    <UiKit.ReefIcon className="h-10 w-10 text-[#7a3bbd]" />
                   ) : (
-                    <span className="text-lg text-white">{token.icon}</span>
+                    <span className="text-lg">{token.icon}</span>
                   )}
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-[#1b1530] uppercase">{token.symbol}</div>
-                  <div className="text-base font-semibold text-[#1b1530]">
+                  <div className="text-lg font-semibold text-[#1b1530] uppercase">{token.symbol}</div>
+                  <div className="text-base font-medium text-[#1b1530]">
                     {formatPrice(token.price)}
                   </div>
                 </div>
@@ -60,8 +60,10 @@ import UiKit from '@reef-chain/ui-kit';
               {/* Balance and actions */}
               <div className="flex items-center gap-5">
                 <div className="text-right">
-                  <p className="text-xl font-bold text-[#8a2fb5]">${formatNumber(token.usdValue)}</p>
-                  <p className="text-base font-semibold text-[#1b1530]">
+                  <p className="text-xl font-semibold bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent">
+                    ${formatNumber(token.usdValue)}
+                  </p>
+                  <p className="text-sm font-medium text-[#1b1530]">
                     {formatNumber(token.balance)} {token.symbol}
                   </p>
                 </div>

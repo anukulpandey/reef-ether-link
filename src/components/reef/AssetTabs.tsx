@@ -6,7 +6,7 @@ import { Sparkles } from 'lucide-react';
  
  const AssetTabs = () => {
    return (
-     <Tabs defaultValue="tokens" className="w-full">
+    <Tabs defaultValue="tokens" className="w-full pl-6">
       <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-4 h-auto p-0 mb-4">
         <TabsTrigger
           value="tokens"
