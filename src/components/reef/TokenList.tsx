@@ -2,7 +2,8 @@
  import { Card } from '@/components/ui/card';
  import { Layers, ArrowUpRight } from 'lucide-react';
  import { mockTokens, type Token } from '@/lib/mockData';
- import { useState } from 'react';
+import { useState } from 'react';
+import UiKit from '@reef-chain/ui-kit';
  import SendModal from './SendModal';
  
  const TokenList = () => {
@@ -41,9 +42,13 @@
              >
                {/* Token info */}
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
-                   <span className="text-lg">{token.icon}</span>
-                 </div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
+                  {token.icon === 'reef' ? (
+                    <UiKit.ReefIcon className="h-5 w-5 text-white" />
+                  ) : (
+                    <span className="text-lg">{token.icon}</span>
+                  )}
+                </div>
                  <div>
                    <div className="flex items-center gap-2">
                      <span className="font-medium text-foreground">{token.name}</span>

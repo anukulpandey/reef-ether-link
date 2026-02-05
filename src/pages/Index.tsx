@@ -3,6 +3,7 @@ import PortfolioSummary from '@/components/reef/PortfolioSummary';
 import AssetTabs from '@/components/reef/AssetTabs';
 import ActivityPanel from '@/components/reef/ActivityPanel';
 import { useAccount } from 'wagmi';
+import UiKit from '@reef-chain/ui-kit';
 
 const Index = () => {
   const { isConnected } = useAccount();
@@ -39,7 +40,7 @@ const Index = () => {
         ) : (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center mb-6">
-              <span className="text-4xl">🌊</span>
+              <UiKit.ReefIcon className="h-12 w-12 text-white" />
             </div>
             <h2 className="text-2xl font-bold text-foreground mb-2">Welcome to Reef</h2>
             <p className="text-muted-foreground mb-6">Connect your wallet to get started</p>

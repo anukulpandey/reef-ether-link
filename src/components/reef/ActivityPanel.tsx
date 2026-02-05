@@ -1,6 +1,7 @@
- import { ArrowUpRight, ArrowDownLeft, ExternalLink } from 'lucide-react';
- import { Card } from '@/components/ui/card';
- import { mockTransactions } from '@/lib/mockData';
+import { ArrowUpRight, ArrowDownLeft, ExternalLink } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { mockTransactions } from '@/lib/mockData';
+import UiKit from '@reef-chain/ui-kit';
  
  const ActivityPanel = () => {
    return (
@@ -50,12 +51,16 @@
                <span className={`text-sm font-medium ${tx.type === 'sent' ? 'text-red-500' : 'text-green-500'}`}>
                  {tx.type === 'sent' ? '-' : '+'}{tx.amount} {tx.symbol}
                </span>
-               <div className="w-5 h-5 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
-                 <span className="text-xs">{tx.icon}</span>
-               </div>
-             </div>
-           </div>
-         ))}
+              <div className="w-5 h-5 rounded-full bg-gradient-to-br from-reef-purple to-reef-pink flex items-center justify-center">
+                {tx.icon === 'reef' ? (
+                  <UiKit.ReefIcon className="h-3 w-3 text-white" />
+                ) : (
+                  <span className="text-xs">{tx.icon}</span>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
        </div>
      </Card>
    );

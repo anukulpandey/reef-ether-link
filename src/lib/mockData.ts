@@ -24,7 +24,7 @@
      id: '1',
      name: 'Reef',
      symbol: 'REEF',
-     icon: '🌊',
+    icon: 'reef',
      price: 0.001585,
      priceChange: 5.11,
      balance: 99999702.62,
@@ -50,7 +50,7 @@
      symbol: 'REEF',
      date: 'Jan 30, 2025',
      time: '4:53 AM',
-     icon: '🌊',
+    icon: 'reef',
    },
    {
      id: '2',
@@ -59,7 +59,7 @@
      symbol: 'REEF',
      date: 'Jan 30, 2025',
      time: '4:52 AM',
-     icon: '🌊',
+    icon: 'reef',
    },
    {
      id: '3',
@@ -68,7 +68,7 @@
      symbol: 'REEF',
      date: 'Jan 30, 2025',
      time: '4:49 AM',
-     icon: '🌊',
+    icon: 'reef',
    },
    {
      id: '4',
@@ -77,7 +77,7 @@
      symbol: 'REEF',
      date: 'Jan 30, 2025',
      time: '4:49 AM',
-     icon: '🌊',
+    icon: 'reef',
    },
    {
      id: '5',
@@ -86,7 +86,7 @@
      symbol: 'REEF',
      date: 'Jan 30, 2025',
      time: '4:46 AM',
-     icon: '🌊',
+    icon: 'reef',
    },
  ];
  
