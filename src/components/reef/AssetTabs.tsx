@@ -32,7 +32,7 @@ import { Sparkles } from 'lucide-react';
             Your wallet doesn't own any NFTs.
           </p>
           <Button
-            className="rounded-[18px] px-12 py-7 text-lg font-semibold bg-gradient-to-b from-[#0f63e3] to-[#0a3fae] text-white shadow-[0_12px_24px_rgba(10,63,174,0.28)] transition-transform duration-200 hover:scale-[1.03] hover:opacity-95"
+            className="rounded-[18px] px-12 py-8 text-lg font-semibold bg-gradient-to-b from-[#0f63e3] to-[#0a3fae] text-white shadow-[0_12px_24px_rgba(10,63,174,0.28)] transition-transform duration-200 hover:scale-[1.03] hover:opacity-95"
             asChild
           >
             <a href="https://sqwid.app" target="_blank" rel="noopener noreferrer">
