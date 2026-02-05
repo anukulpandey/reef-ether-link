@@ -1,6 +1,6 @@
  import { Button } from '@/components/ui/button';
  import { Card } from '@/components/ui/card';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Coins } from 'lucide-react';
  import { mockTokens, type Token } from '@/lib/mockData';
 import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
@@ -33,65 +33,54 @@ import UiKit from '@reef-chain/ui-kit';
  
    return (
      <>
-       <Card className="bg-card rounded-2xl shadow-sm border-0 overflow-hidden">
-         <div className="divide-y divide-border">
-           {mockTokens.map((token) => (
-             <div
-               key={token.id}
-               className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
-             >
-               {/* Token info */}
-               <div className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                    token.icon === 'reef'
-                      ? 'bg-muted/40'
-                      : 'bg-gradient-to-br from-reef-purple to-reef-pink'
-                  }`}
-                >
+      <Card className="bg-transparent rounded-2xl shadow-none border-0 overflow-hidden">
+        <div className="space-y-4">
+          {mockTokens.map((token) => (
+            <div
+              key={token.id}
+              className="flex items-center justify-between rounded-2xl bg-white px-5 py-4 shadow-sm border border-[#ebe6f4]"
+            >
+              {/* Token info */}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#a12fc5] flex items-center justify-center shadow-sm">
                   {token.icon === 'reef' ? (
-                    <UiKit.ReefIcon className="h-6 w-6 text-[#7a3bbd]" />
+                    <UiKit.ReefIcon className="h-6 w-6 text-white" />
                   ) : (
-                    <span className="text-lg">{token.icon}</span>
+                    <span className="text-lg text-white">{token.icon}</span>
                   )}
                 </div>
-                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-base font-semibold text-foreground">{token.name}</span>
-                    <span className="text-xs font-medium text-muted-foreground">{token.symbol}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-muted-foreground">{formatPrice(token.price)}</span>
-                    <span className={`text-xs font-medium ${token.priceChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {token.priceChange >= 0 ? '+' : ''}{token.priceChange}%
-                    </span>
+                <div>
+                  <div className="text-lg font-bold text-[#1b1530] uppercase">{token.symbol}</div>
+                  <div className="text-base font-semibold text-[#1b1530]">
+                    {formatPrice(token.price)}
                   </div>
                 </div>
               </div>
- 
-               {/* Balance and actions */}
-               <div className="flex items-center gap-6">
+
+              {/* Balance and actions */}
+              <div className="flex items-center gap-5">
                 <div className="text-right">
-                  <p className="text-base font-semibold text-foreground">${formatNumber(token.usdValue)}</p>
-                  <p className="text-sm font-medium text-muted-foreground">{formatNumber(token.balance)}</p>
+                  <p className="text-xl font-bold text-[#8a2fb5]">${formatNumber(token.usdValue)}</p>
+                  <p className="text-base font-semibold text-[#1b1530]">
+                    {formatNumber(token.balance)} {token.symbol}
+                  </p>
                 </div>
- 
-                <div className="flex items-center gap-2">
+
+                <div className="flex items-center gap-3">
                   <Button
-                    variant="outline"
                     size="sm"
-                    className="rounded-full text-primary border-primary hover:bg-primary hover:text-white"
+                    className="rounded-[18px] px-6 py-5 text-white bg-[#8f2fb4] shadow-md hover:bg-[#7d29a0]"
                     onClick={() => handleSend(token)}
                   >
-                     Send
-                     <ArrowUpRight className="w-3 h-3 ml-1" />
-                   </Button>
-                 </div>
-               </div>
-             </div>
-           ))}
-         </div>
-       </Card>
+                    Send
+                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
  
        <SendModal
          isOpen={sendModalOpen}
