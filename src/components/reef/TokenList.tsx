@@ -1,6 +1,6 @@
  import { Button } from '@/components/ui/button';
  import { Card } from '@/components/ui/card';
- import { Layers, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
  import { mockTokens, type Token } from '@/lib/mockData';
 import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
@@ -70,16 +70,13 @@ import UiKit from '@reef-chain/ui-kit';
                    <p className="text-sm text-muted-foreground">{formatNumber(token.balance)}</p>
                  </div>
  
-                 <div className="flex items-center gap-2">
-                   <Button variant="ghost" size="icon" className="rounded-full text-muted-foreground">
-                     <Layers className="w-4 h-4" />
-                   </Button>
-                   <Button
-                     variant="outline"
-                     size="sm"
-                     className="rounded-full text-primary border-primary hover:bg-primary hover:text-white"
-                     onClick={() => handleSend(token)}
-                   >
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full text-primary border-primary hover:bg-primary hover:text-white"
+                    onClick={() => handleSend(token)}
+                  >
                      Send
                      <ArrowUpRight className="w-3 h-3 ml-1" />
                    </Button>
