@@ -97,7 +97,7 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
             </div>
 
             <Button
-              className="w-full mt-6 bg-gradient-to-r from-reef-purple to-reef-pink text-white rounded-full py-6 text-base"
+              className="w-full mt-6 bg-[#e24b4b] hover:bg-[#cf3f3f] text-white rounded-full py-6 text-base"
               onClick={() => {
                 onLogout?.();
                 onClose();
