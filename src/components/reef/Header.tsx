@@ -37,7 +37,15 @@ const Header = () => {
               <div className="flex items-center gap-3 rounded-full bg-[#f1edf8] px-5 py-3 shadow-sm">
                 <UiKit.ReefIcon className="h-7 w-7 text-[#7a3bbd]" />
                 {isBalanceLoading ? (
-                  <div className="h-5 w-20 rounded bg-gradient-to-r from-[#a93185]/10 to-[#5d3bad]/10 animate-pulse" />
+                  <div className="flex items-center gap-1">
+                    {[0, 1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#a93185] to-[#5d3bad]"
+                        style={{ animation: `bounce-dot 1s ease-in-out ${i * 0.15}s infinite` }}
+                      />
+                    ))}
+                  </div>
                 ) : (
                   <span className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-base font-semibold tracking-tight text-transparent">
                     {showBalances ? formattedBalance : '••••••'}

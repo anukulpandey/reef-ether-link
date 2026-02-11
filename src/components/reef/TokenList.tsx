@@ -74,10 +74,15 @@ import { useReefBalance } from '@/hooks/useReefBalance';
               <div className="flex items-center gap-5">
                 <div className="text-right">
                   {isBalanceLoading && token.symbol === 'REEF' ? (
-                    <>
-                      <div className="h-6 w-24 rounded bg-gradient-to-r from-[#a93185]/10 to-[#5d3bad]/10 animate-pulse mb-1 ml-auto" />
-                      <div className="h-4 w-20 rounded bg-[#e8e4f0] animate-pulse ml-auto" />
-                    </>
+                    <div className="flex items-center gap-1 justify-end">
+                      {[0, 1, 2, 3].map((i) => (
+                        <div
+                          key={i}
+                          className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#a93185] to-[#5d3bad]"
+                          style={{ animation: `bounce-dot 1s ease-in-out ${i * 0.15}s infinite` }}
+                        />
+                      ))}
+                    </div>
                   ) : (
                     <>
                       <p className="text-xl font-semibold bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent">

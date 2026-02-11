@@ -46,7 +46,15 @@ import BuyReefButton from './BuyReef';
         </div>
 
         {isLoading ? (
-          <div className="h-10 w-48 rounded-lg bg-gradient-to-r from-[#a93185]/10 to-[#5d3bad]/10 animate-pulse mt-1" />
+          <div className="flex items-center gap-1.5 h-10 mt-1">
+            {[0, 1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="w-2 h-2 rounded-full bg-gradient-to-r from-[#a93185] to-[#5d3bad]"
+                style={{ animation: `bounce-dot 1s ease-in-out ${i * 0.15}s infinite` }}
+              />
+            ))}
+          </div>
         ) : (
           <Uik.Text
             text={hideValue(formatCurrency(totalBalance))}
