@@ -66,30 +66,35 @@ const Index = () => {
               </div>
             </div>
             <UiKit.Bubbles className="absolute inset-0 opacity-60 pointer-events-none" />
-            <Button
-              className="absolute bottom-4 left-4 z-20 rounded-full bg-white/70 text-[#5d3bad] hover:bg-white/90 shadow-sm text-sm font-medium px-4 py-2 h-auto"
-              variant="ghost"
-              onClick={async () => {
-                const provider = (window as any).ethereum;
-                if (!provider) return;
-                await provider.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [{
-                    chainId: `0x${reefTestnet.id.toString(16)}`,
-                    chainName: reefTestnet.name,
-                    nativeCurrency: reefTestnet.nativeCurrency,
-                    rpcUrls: reefTestnet.rpcUrls.default.http,
-                    blockExplorerUrls: [reefTestnet.blockExplorers.default.url],
-                  }],
-                });
-              }}
-            >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="" className="h-4 w-4 mr-1.5" />
-              Add to MetaMask
-            </Button>
           </div>
         )}
       </main>
+
+      {!isConnected && (
+        <footer className="fixed bottom-0 left-0 right-0 bg-[#f2f0f8] border-t border-border px-6 py-3">
+          <Button
+            className="rounded-full bg-white/70 text-[#5d3bad] hover:bg-white/90 shadow-sm text-sm font-medium px-4 py-2 h-auto"
+            variant="ghost"
+            onClick={async () => {
+              const provider = (window as any).ethereum;
+              if (!provider) return;
+              await provider.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: `0x${reefTestnet.id.toString(16)}`,
+                  chainName: reefTestnet.name,
+                  nativeCurrency: reefTestnet.nativeCurrency,
+                  rpcUrls: reefTestnet.rpcUrls.default.http,
+                  blockExplorerUrls: [reefTestnet.blockExplorers.default.url],
+                }],
+              });
+            }}
+          >
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="" className="h-4 w-4 mr-1.5" />
+            Add to MetaMask
+          </Button>
+        </footer>
+      )}
     </div>
   );
 };
