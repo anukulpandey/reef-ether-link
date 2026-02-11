@@ -6,20 +6,19 @@ import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
 import SendModal from './SendModal';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
-import { useAccount, useBalance } from 'wagmi';
-import { formatUnits } from 'viem';
+import { useAccount } from 'wagmi';
+import { useReefBalance } from '@/hooks/useReefBalance';
 
  const TokenList = () => {
   const [sendModalOpen, setSendModalOpen] = useState(false);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const { showBalances } = useBalanceVisibility();
   const { address } = useAccount();
-  const { data: balanceData } = useBalance({ address });
+  const { balance: reefBalance } = useReefBalance(address);
 
   const tokens = mockTokens.map((token) => {
-    if (token.symbol === 'REEF' && balanceData) {
-      const balance = Number(formatUnits(balanceData.value, balanceData.decimals));
-      return { ...token, balance, usdValue: balance * token.price };
+    if (token.symbol === 'REEF') {
+      return { ...token, balance: reefBalance, usdValue: reefBalance * token.price };
     }
     return token;
   });

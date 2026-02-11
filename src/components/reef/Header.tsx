@@ -1,12 +1,12 @@
 import { ChevronDown } from 'lucide-react';
  import { Button } from '@/components/ui/button';
-import { useAccount, useBalance, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { metaMask } from 'wagmi/connectors';
 import { useState } from 'react';
 import AccountModal from './AccountModal';
 import UiKit from "@reef-chain/ui-kit";
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
-import { formatUnits } from 'viem';
+import { useReefBalance } from '@/hooks/useReefBalance';
 
 const Header = () => {
   const { address, isConnected, connector } = useAccount();
@@ -14,11 +14,9 @@ const Header = () => {
   const { disconnect } = useDisconnect();
    const [showAccountModal, setShowAccountModal] = useState(false);
   const { showBalances } = useBalanceVisibility();
-  const { data: balanceData } = useBalance({ address });
+  const { balance } = useReefBalance(address);
 
-  const formattedBalance = balanceData
-    ? new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(formatUnits(balanceData.value, balanceData.decimals)))
-    : '0.00';
+  const formattedBalance = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(balance);
  
    return (
      <>

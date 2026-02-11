@@ -2,9 +2,9 @@
  import { defineChain } from 'viem';
  import { metaMask } from 'wagmi/connectors';
  
- export const reefTestnet = defineChain({
+ export const reefMainnet = defineChain({
    id: 13939,
-   name: 'Reef Testnet',
+   name: 'Reef Mainnet',
    nativeCurrency: {
      decimals: 18,
      name: 'Reef',
@@ -16,17 +16,16 @@
     },
    },
    blockExplorers: {
-     default: { name: 'Reef Explorer', url: 'https://testnet.reefscan.com' },
+     default: { name: 'Reef Explorer', url: 'https://reefscan.com' },
    },
-   testnet: true,
  });
  
  export const config = createConfig({
-   chains: [reefTestnet],
+   chains: [reefMainnet],
    connectors: [
      metaMask(),
    ],
    transports: {
-     [reefTestnet.id]: http(),
+     [reefMainnet.id]: http(),
    },
  });

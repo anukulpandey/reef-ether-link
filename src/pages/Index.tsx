@@ -2,18 +2,17 @@ import Header from '@/components/reef/Header';
 import PortfolioSummary from '@/components/reef/PortfolioSummary';
 import AssetTabs from '@/components/reef/AssetTabs';
 import ActivityPanel from '@/components/reef/ActivityPanel';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount } from 'wagmi';
 import UiKit from '@reef-chain/ui-kit';
 import { mockTokens } from '@/lib/mockData';
-import { reefTestnet } from '@/lib/wagmi';
+import { reefMainnet } from '@/lib/wagmi';
 import { Button } from '@/components/ui/button';
-import { formatUnits } from 'viem';
+import { useReefBalance } from '@/hooks/useReefBalance';
 
 const Index = () => {
   const { address, isConnected } = useAccount();
-  const { data: balanceData } = useBalance({ address });
+  const { balance: reefBalance } = useReefBalance(address);
 
-  const reefBalance = balanceData ? Number(formatUnits(balanceData.value, balanceData.decimals)) : 0;
   const reefPrice = mockTokens[0].price;
   const totalUsdValue = reefBalance * reefPrice;
 
@@ -62,7 +61,7 @@ const Index = () => {
               <div className="mt-6 flex items-center gap-3 text-sm text-[#8e899c]">
                 <span className="rounded-full bg-white/70 px-3 py-1">Secure</span>
                 <span className="rounded-full bg-white/70 px-3 py-1">Non‑custodial</span>
-                <span className="rounded-full bg-white/70 px-3 py-1">Testnet ready</span>
+                <span className="rounded-full bg-white/70 px-3 py-1">Mainnet ready</span>
               </div>
             </div>
             <UiKit.Bubbles className="absolute inset-0 opacity-60 pointer-events-none" />
@@ -81,11 +80,11 @@ const Index = () => {
               await provider.request({
                 method: 'wallet_addEthereumChain',
                 params: [{
-                  chainId: `0x${reefTestnet.id.toString(16)}`,
-                  chainName: reefTestnet.name,
-                  nativeCurrency: reefTestnet.nativeCurrency,
-                  rpcUrls: reefTestnet.rpcUrls.default.http,
-                  blockExplorerUrls: [reefTestnet.blockExplorers.default.url],
+                  chainId: `0x${reefMainnet.id.toString(16)}`,
+                  chainName: reefMainnet.name,
+                  nativeCurrency: reefMainnet.nativeCurrency,
+                  rpcUrls: reefMainnet.rpcUrls.default.http,
+                  blockExplorerUrls: [reefMainnet.blockExplorers.default.url],
                 }],
               });
             }}

@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { BalanceVisibilityProvider } from "@/contexts/BalanceVisibilityContext";
+import { ReefStateProvider } from "@/contexts/ReefStateContext";
 
 const queryClient = new QueryClient();
 
@@ -17,14 +18,16 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BalanceVisibilityProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </BalanceVisibilityProvider>
+        <ReefStateProvider>
+          <BalanceVisibilityProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </BalanceVisibilityProvider>
+        </ReefStateProvider>
       </TooltipProvider>
     </QueryClientProvider>
   </WagmiProvider>

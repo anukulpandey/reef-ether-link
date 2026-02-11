@@ -1,11 +1,18 @@
-import { ArrowUpRight, ArrowDownLeft, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ArrowDownLeft, ExternalLink, Loader2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { mockTransactions } from '@/lib/mockData';
 import UiKit from '@reef-chain/ui-kit';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
- 
+import { useAccount } from 'wagmi';
+import { useReefTransactions } from '@/hooks/useReefTransactions';
+
 const ActivityPanel = () => {
   const { showBalances } = useBalanceVisibility();
+  const { address } = useAccount();
+  const { transactions, isLoading } = useReefTransactions(address);
+
+  const formatAmount = (value: number) =>
+    new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+
   return (
     <Card className="bg-transparent rounded-2xl border-0 p-0 shadow-none">
       <div className="flex items-center justify-between mb-6">
@@ -22,42 +29,52 @@ const ActivityPanel = () => {
       </div>
 
       <div className="rounded-3xl bg-white shadow-sm border border-[#ebe6f4]">
-        {mockTransactions.map((tx, index) => (
-          <div key={tx.id}>
-            <div className="flex items-center justify-between px-6 py-5 transition-colors hover:bg-[#f3f4f7]">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#eef0f5] flex items-center justify-center">
-                  {tx.type === 'sent' ? (
-                    <ArrowUpRight className="w-6 h-6 text-[#a8a4b3]" />
-                  ) : (
-                    <ArrowDownLeft className="w-6 h-6 text-[#a8a4b3]" />
-                  )}
-                </div>
-                <div>
-                  <p className="text-base font-semibold text-[#1b1530]">
-                    {tx.type === 'sent' ? 'Sent REEF' : 'Received REEF'}
-                  </p>
-                  <p className="text-sm font-medium text-[#8e899c]">
-                    {tx.date} · {tx.time}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <span className="text-base font-semibold text-[#a8a4b3]">
-                  {showBalances ? `${tx.type === 'sent' ? '-' : '+'}${tx.amount}` : '••••••'}
-                </span>
-                {showBalances && <UiKit.ReefIcon className="h-5 w-5 text-[#b08ac8]/70" />}
-              </div>
-            </div>
-            {index < mockTransactions.length - 1 && (
-              <div className="mx-6 h-px bg-[#ebe6f4]" />
-            )}
+        {isLoading && transactions.length === 0 ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-6 h-6 text-[#a8a4b3] animate-spin" />
           </div>
-        ))}
+        ) : transactions.length === 0 ? (
+          <div className="px-6 py-12 text-center text-sm text-[#8e899c]">
+            No transactions yet
+          </div>
+        ) : (
+          transactions.map((tx, index) => (
+            <div key={tx.id}>
+              <div className="flex items-center justify-between px-6 py-5 transition-colors hover:bg-[#f3f4f7]">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-[#eef0f5] flex items-center justify-center">
+                    {tx.type === 'sent' ? (
+                      <ArrowUpRight className="w-6 h-6 text-[#a8a4b3]" />
+                    ) : (
+                      <ArrowDownLeft className="w-6 h-6 text-[#a8a4b3]" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-base font-semibold text-[#1b1530]">
+                      {tx.type === 'sent' ? 'Sent REEF' : 'Received REEF'}
+                    </p>
+                    <p className="text-sm font-medium text-[#8e899c]">
+                      {tx.date} · {tx.time}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-base font-semibold text-[#a8a4b3]">
+                    {showBalances ? `${tx.type === 'sent' ? '-' : '+'}${formatAmount(tx.amount)}` : '••••••'}
+                  </span>
+                  {showBalances && <UiKit.ReefIcon className="h-5 w-5 text-[#b08ac8]/70" />}
+                </div>
+              </div>
+              {index < transactions.length - 1 && (
+                <div className="mx-6 h-px bg-[#ebe6f4]" />
+              )}
+            </div>
+          ))
+        )}
       </div>
-     </Card>
-   );
- };
- 
- export default ActivityPanel;
+    </Card>
+  );
+};
+
+export default ActivityPanel;
