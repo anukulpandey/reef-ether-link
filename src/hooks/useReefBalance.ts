@@ -7,7 +7,7 @@ const REEF_DECIMALS = 18;
 export function useReefBalance(address: string | undefined) {
   const { isReefReady } = useReefState();
   const [balance, setBalance] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
     if (!address || !isReefReady) return;
@@ -15,16 +15,14 @@ export function useReefBalance(address: string | undefined) {
     let cancelled = false;
 
     const fetchBalance = async () => {
-      setIsLoading(true);
       try {
         const weiBalance = await getReviveBalance(address);
         if (!cancelled) {
           setBalance(Number(weiBalance) / 10 ** REEF_DECIMALS);
+          setHasFetched(true);
         }
       } catch (err) {
         console.error('Failed to fetch reef balance:', err);
-      } finally {
-        if (!cancelled) setIsLoading(false);
       }
     };
 
@@ -36,6 +34,8 @@ export function useReefBalance(address: string | undefined) {
       clearInterval(interval);
     };
   }, [address, isReefReady]);
+
+  const isLoading = !!address && !hasFetched;
 
   return { balance, isLoading };
 }

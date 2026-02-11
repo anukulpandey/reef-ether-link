@@ -18,7 +18,7 @@ const ActivityPanel = () => {
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-semibold text-[#1b1530]">Activity</h3>
         <a
-          href="https://testnet.reefscan.com"
+          href="https://reefscan.com"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full bg-[#efe7f6] px-5 py-2 text-sm font-semibold text-[#b13c8e]"

@@ -14,7 +14,7 @@ const Header = () => {
   const { disconnect } = useDisconnect();
    const [showAccountModal, setShowAccountModal] = useState(false);
   const { showBalances } = useBalanceVisibility();
-  const { balance } = useReefBalance(address);
+  const { balance, isLoading: isBalanceLoading } = useReefBalance(address);
 
   const formattedBalance = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(balance);
  
@@ -36,9 +36,13 @@ const Header = () => {
                {/* Balance display */}
               <div className="flex items-center gap-3 rounded-full bg-[#f1edf8] px-5 py-3 shadow-sm">
                 <UiKit.ReefIcon className="h-7 w-7 text-[#7a3bbd]" />
-                <span className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-base font-semibold tracking-tight text-transparent">
-                  {showBalances ? formattedBalance : '••••••'}
-                </span>
+                {isBalanceLoading ? (
+                  <div className="h-5 w-20 rounded bg-gradient-to-r from-[#a93185]/10 to-[#5d3bad]/10 animate-pulse" />
+                ) : (
+                  <span className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-base font-semibold tracking-tight text-transparent">
+                    {showBalances ? formattedBalance : '••••••'}
+                  </span>
+                )}
               </div>
  
                {/* Account selector */}

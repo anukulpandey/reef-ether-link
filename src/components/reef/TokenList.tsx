@@ -14,7 +14,7 @@ import { useReefBalance } from '@/hooks/useReefBalance';
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const { showBalances } = useBalanceVisibility();
   const { address } = useAccount();
-  const { balance: reefBalance } = useReefBalance(address);
+  const { balance: reefBalance, isLoading: isBalanceLoading } = useReefBalance(address);
 
   const tokens = mockTokens.map((token) => {
     if (token.symbol === 'REEF') {
@@ -73,12 +73,21 @@ import { useReefBalance } from '@/hooks/useReefBalance';
               {/* Balance and actions */}
               <div className="flex items-center gap-5">
                 <div className="text-right">
-                  <p className="text-xl font-semibold bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent">
-                    {showBalances ? `$${formatNumber(token.usdValue)}` : '••••••'}
-                  </p>
-                  <p className="text-sm font-medium text-[#1b1530]">
-                    {showBalances ? `${formatNumber(token.balance)} ${token.symbol}` : '••••••'}
-                  </p>
+                  {isBalanceLoading && token.symbol === 'REEF' ? (
+                    <>
+                      <div className="h-6 w-24 rounded bg-gradient-to-r from-[#a93185]/10 to-[#5d3bad]/10 animate-pulse mb-1 ml-auto" />
+                      <div className="h-4 w-20 rounded bg-[#e8e4f0] animate-pulse ml-auto" />
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-xl font-semibold bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent">
+                        {showBalances ? `$${formatNumber(token.usdValue)}` : '••••••'}
+                      </p>
+                      <p className="text-sm font-medium text-[#1b1530]">
+                        {showBalances ? `${formatNumber(token.balance)} ${token.symbol}` : '••••••'}
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-3">

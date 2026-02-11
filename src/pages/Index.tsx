@@ -11,7 +11,7 @@ import { useReefBalance } from '@/hooks/useReefBalance';
 
 const Index = () => {
   const { address, isConnected } = useAccount();
-  const { balance: reefBalance } = useReefBalance(address);
+  const { balance: reefBalance, isLoading: isBalanceLoading } = useReefBalance(address);
 
   const reefPrice = mockTokens[0].price;
   const totalUsdValue = reefBalance * reefPrice;
@@ -29,6 +29,7 @@ const Index = () => {
                 totalBalance={totalUsdValue}
                 availableBalance={totalUsdValue}
                 stakedBalance={0}
+                isLoading={isBalanceLoading}
               />
             </section>
 

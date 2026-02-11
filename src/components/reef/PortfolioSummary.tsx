@@ -8,12 +8,14 @@ import BuyReefButton from './BuyReef';
    totalBalance: number;
    availableBalance: number;
    stakedBalance: number;
+   isLoading?: boolean;
  }
- 
+
  const PortfolioSummary = ({
    totalBalance = 158499.53,
    availableBalance = 158499.53,
    stakedBalance = 0.00,
+   isLoading = false,
  }: PortfolioSummaryProps) => {
   const { showBalances, toggleBalances } = useBalanceVisibility();
  
@@ -43,11 +45,15 @@ import BuyReefButton from './BuyReef';
           </button>
         </div>
 
-        <Uik.Text
-          text={hideValue(formatCurrency(totalBalance))}
-          type="headline"
-          className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent"
-        />
+        {isLoading ? (
+          <div className="h-10 w-48 rounded-lg bg-gradient-to-r from-[#a93185]/10 to-[#5d3bad]/10 animate-pulse mt-1" />
+        ) : (
+          <Uik.Text
+            text={hideValue(formatCurrency(totalBalance))}
+            type="headline"
+            className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-transparent"
+          />
+        )}
 
         <div />
       </Card>
