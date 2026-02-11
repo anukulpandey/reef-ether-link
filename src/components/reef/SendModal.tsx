@@ -60,23 +60,7 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
   }, [sendError, confirmError]);
 
   const handleSend = () => {
-    if (!token) return;
-
-    if (!isAddress(recipient)) {
-      toast({ title: 'Invalid Address', description: 'Please enter a valid EVM address.', variant: 'destructive' });
-      return;
-    }
-
-    const numAmount = parseFloat(amount);
-    if (!numAmount || numAmount <= 0) {
-      toast({ title: 'Invalid Amount', description: 'Please enter an amount greater than 0.', variant: 'destructive' });
-      return;
-    }
-
-    if (numAmount > token.balance) {
-      toast({ title: 'Insufficient Balance', description: `You only have ${token.balance.toLocaleString()} ${token.symbol}.`, variant: 'destructive' });
-      return;
-    }
+    if (!token || hasErrors || !recipient || !amount) return;
 
     sendTransaction({
       to: recipient as `0x${string}`,
@@ -104,6 +88,14 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
   const formatBalance = (val: number) =>
     new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val);
 
+  const numAmount = parseFloat(amount);
+  const amountExceedsBalance = amount !== '' && numAmount > token.balance;
+  const amountIsNegative = amount !== '' && numAmount < 0;
+  const amountIsZero = amount !== '' && numAmount === 0;
+  const recipientInvalid = recipient !== '' && !isAddress(recipient);
+  const hasAmountError = amountExceedsBalance || amountIsNegative || amountIsZero;
+  const hasErrors = hasAmountError || recipientInvalid;
+
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-md bg-[#f6f3fb] rounded-3xl border-0 p-0 overflow-hidden shadow-2xl">
@@ -127,7 +119,7 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
         {/* Body */}
         <div className="px-6 pb-6 space-y-4">
           {/* Amount Card */}
-          <div className="bg-white/70 rounded-2xl p-4 shadow-sm border border-[#ebe6f4]">
+          <div className={`bg-white/70 rounded-2xl p-4 shadow-sm border transition-colors ${hasAmountError ? 'border-red-400' : 'border-[#ebe6f4]'}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-medium text-[#8e899c] uppercase tracking-wide">Amount</span>
               <button
@@ -145,7 +137,7 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 disabled={isProcessing}
-                className="flex-1 bg-transparent text-2xl font-semibold text-[#1b1530] placeholder:text-[#c5c0d0] outline-none disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className={`flex-1 bg-transparent text-2xl font-semibold placeholder:text-[#c5c0d0] outline-none disabled:opacity-50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${hasAmountError ? 'text-red-500' : 'text-[#1b1530]'}`}
               />
               <div className="flex items-center gap-1.5 rounded-full bg-[#f1edf8] px-3 py-1.5">
                 {token.icon === 'reef' ? (
@@ -156,20 +148,36 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
                 <span className="text-sm font-semibold text-[#1b1530]">{token.symbol}</span>
               </div>
             </div>
-            <p className="text-xs text-[#8e899c] mt-2">
-              Balance: {showBalances ? `${formatBalance(token.balance)} ${token.symbol}` : '••••••'}
-            </p>
+            <div className="flex items-center justify-between mt-2">
+              <p className="text-xs text-[#8e899c]">
+                Balance: {showBalances ? `${formatBalance(token.balance)} ${token.symbol}` : '••••••'}
+              </p>
+              {amountExceedsBalance && (
+                <p className="text-xs font-medium text-red-500">Insufficient balance</p>
+              )}
+              {amountIsNegative && (
+                <p className="text-xs font-medium text-red-500">Amount must be positive</p>
+              )}
+              {amountIsZero && (
+                <p className="text-xs font-medium text-red-500">Enter an amount</p>
+              )}
+            </div>
           </div>
 
           {/* Recipient Card */}
-          <div className="bg-white/70 rounded-2xl p-4 shadow-sm border border-[#ebe6f4]">
-            <span className="text-xs font-medium text-[#8e899c] uppercase tracking-wide mb-2 block">Recipient</span>
+          <div className={`bg-white/70 rounded-2xl p-4 shadow-sm border transition-colors ${recipientInvalid ? 'border-red-400' : 'border-[#ebe6f4]'}`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-medium text-[#8e899c] uppercase tracking-wide">Recipient</span>
+              {recipientInvalid && (
+                <span className="text-xs font-medium text-red-500">Invalid address</span>
+              )}
+            </div>
             <input
               placeholder="0x..."
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               disabled={isProcessing}
-              className="w-full bg-transparent text-sm font-medium text-[#1b1530] placeholder:text-[#c5c0d0] outline-none font-mono disabled:opacity-50"
+              className={`w-full bg-transparent text-sm font-medium placeholder:text-[#c5c0d0] outline-none font-mono disabled:opacity-50 ${recipientInvalid ? 'text-red-500' : 'text-[#1b1530]'}`}
             />
           </div>
 
@@ -177,7 +185,7 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
           <Button
             className="w-full rounded-2xl py-6 text-base font-semibold bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white shadow-md hover:shadow-lg transition-shadow"
             onClick={handleSend}
-            disabled={!recipient || !amount || isProcessing}
+            disabled={!recipient || !amount || isProcessing || hasErrors}
           >
             {isSending ? (
               <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Waiting for approval...</>
