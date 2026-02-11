@@ -1,22 +1,24 @@
 import { ChevronDown } from 'lucide-react';
  import { Button } from '@/components/ui/button';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useBalance, useConnect, useDisconnect } from 'wagmi';
 import { metaMask } from 'wagmi/connectors';
 import { useState } from 'react';
 import AccountModal from './AccountModal';
 import UiKit from "@reef-chain/ui-kit";
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
- 
-interface HeaderProps {
-  balance?: string;
-}
+import { formatUnits } from 'viem';
 
-const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
+const Header = () => {
   const { address, isConnected, connector } = useAccount();
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
    const [showAccountModal, setShowAccountModal] = useState(false);
   const { showBalances } = useBalanceVisibility();
+  const { data: balanceData } = useBalance({ address });
+
+  const formattedBalance = balanceData
+    ? new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(formatUnits(balanceData.value, balanceData.decimals)))
+    : '0.00';
  
    return (
      <>
@@ -37,7 +39,7 @@ const Header = ({ balance = '99,999,702.62' }: HeaderProps) => {
               <div className="flex items-center gap-3 rounded-full bg-[#f1edf8] px-5 py-3 shadow-sm">
                 <UiKit.ReefIcon className="h-7 w-7 text-[#7a3bbd]" />
                 <span className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] bg-clip-text text-base font-semibold tracking-tight text-transparent">
-                  {showBalances ? balance : '••••••'}
+                  {showBalances ? formattedBalance : '••••••'}
                 </span>
               </div>
  

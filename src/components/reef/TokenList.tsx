@@ -6,11 +6,23 @@ import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
 import SendModal from './SendModal';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
- 
+import { useAccount, useBalance } from 'wagmi';
+import { formatUnits } from 'viem';
+
  const TokenList = () => {
   const [sendModalOpen, setSendModalOpen] = useState(false);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const { showBalances } = useBalanceVisibility();
+  const { address } = useAccount();
+  const { data: balanceData } = useBalance({ address });
+
+  const tokens = mockTokens.map((token) => {
+    if (token.symbol === 'REEF' && balanceData) {
+      const balance = Number(formatUnits(balanceData.value, balanceData.decimals));
+      return { ...token, balance, usdValue: balance * token.price };
+    }
+    return token;
+  });
  
    const handleSend = (token: Token) => {
      setSelectedToken(token);
@@ -37,7 +49,7 @@ import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
      <>
       <Card className="bg-transparent rounded-2xl shadow-none border-0 overflow-hidden">
         <div className="space-y-2">
-          {mockTokens.map((token) => (
+          {tokens.map((token) => (
             <div
               key={token.id}
               className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 shadow-sm border border-[#ebe6f4] w-[92%]"

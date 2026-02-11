@@ -2,11 +2,20 @@ import Header from '@/components/reef/Header';
 import PortfolioSummary from '@/components/reef/PortfolioSummary';
 import AssetTabs from '@/components/reef/AssetTabs';
 import ActivityPanel from '@/components/reef/ActivityPanel';
-import { useAccount } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import UiKit from '@reef-chain/ui-kit';
+import { mockTokens } from '@/lib/mockData';
+import { reefTestnet } from '@/lib/wagmi';
+import { Button } from '@/components/ui/button';
+import { formatUnits } from 'viem';
 
 const Index = () => {
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { data: balanceData } = useBalance({ address });
+
+  const reefBalance = balanceData ? Number(formatUnits(balanceData.value, balanceData.decimals)) : 0;
+  const reefPrice = mockTokens[0].price;
+  const totalUsdValue = reefBalance * reefPrice;
 
   return (
     <div className="min-h-screen bg-background">
@@ -18,8 +27,8 @@ const Index = () => {
             {/* Portfolio Summary */}
             <section className="mb-8">
               <PortfolioSummary
-                totalBalance={158499.53}
-                availableBalance={158499.53}
+                totalBalance={totalUsdValue}
+                availableBalance={totalUsdValue}
                 stakedBalance={0}
               />
             </section>
@@ -43,7 +52,7 @@ const Index = () => {
             <div className="absolute -right-16 -bottom-16 h-64 w-64 rounded-full bg-gradient-to-br from-[#5d3bad]/20 to-[#a93185]/20 blur-2xl" />
             <div className="relative z-10 mx-auto flex max-w-xl flex-col items-center">
               <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-white/70 shadow-sm overflow-hidden">
-                
+
                 <UiKit.ReefIcon className="h-10 w-10 text-[#7a3bbd] relative z-10" />
               </div>
               <h2 className="text-3xl font-semibold text-[#1b1530]">Connect to Reef App</h2>
@@ -56,7 +65,28 @@ const Index = () => {
                 <span className="rounded-full bg-white/70 px-3 py-1">Testnet ready</span>
               </div>
             </div>
-            <UiKit.Bubbles className="absolute inset-0 opacity-60" />
+            <UiKit.Bubbles className="absolute inset-0 opacity-60 pointer-events-none" />
+            <Button
+              className="absolute bottom-4 left-4 z-20 rounded-full bg-white/70 text-[#5d3bad] hover:bg-white/90 shadow-sm text-sm font-medium px-4 py-2 h-auto"
+              variant="ghost"
+              onClick={async () => {
+                const provider = (window as any).ethereum;
+                if (!provider) return;
+                await provider.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [{
+                    chainId: `0x${reefTestnet.id.toString(16)}`,
+                    chainName: reefTestnet.name,
+                    nativeCurrency: reefTestnet.nativeCurrency,
+                    rpcUrls: reefTestnet.rpcUrls.default.http,
+                    blockExplorerUrls: [reefTestnet.blockExplorers.default.url],
+                  }],
+                });
+              }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="" className="h-4 w-4 mr-1.5" />
+              Add to MetaMask
+            </Button>
           </div>
         )}
       </main>
