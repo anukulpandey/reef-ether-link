@@ -1,13 +1,14 @@
  import { Button } from '@/components/ui/button';
  import { Card } from '@/components/ui/card';
 import { FaPaperPlane } from 'react-icons/fa';
-import { mockTokens, type Token } from '@/lib/mockData';
+import { type Token } from '@/lib/mockData';
 import { useState } from 'react';
 import UiKit from '@reef-chain/ui-kit';
 import SendModal from './SendModal';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
 import { useAccount } from 'wagmi';
 import { useReefBalance } from '@/hooks/useReefBalance';
+import { useReefPrice } from '@/hooks/useReefPrice';
 
  const TokenList = () => {
   const [sendModalOpen, setSendModalOpen] = useState(false);
@@ -15,13 +16,20 @@ import { useReefBalance } from '@/hooks/useReefBalance';
   const { showBalances } = useBalanceVisibility();
   const { address } = useAccount();
   const { balance: reefBalance, isLoading: isBalanceLoading } = useReefBalance(address);
+  const { price: reefPrice, change24h } = useReefPrice();
 
-  const tokens = mockTokens.map((token) => {
-    if (token.symbol === 'REEF') {
-      return { ...token, balance: reefBalance, usdValue: reefBalance * token.price };
-    }
-    return token;
-  });
+  const tokens: Token[] = [
+    {
+      id: '1',
+      name: 'Reef',
+      symbol: 'REEF',
+      icon: 'reef',
+      price: reefPrice,
+      priceChange: change24h,
+      balance: reefBalance,
+      usdValue: reefBalance * reefPrice,
+    },
+  ];
  
    const handleSend = (token: Token) => {
      setSelectedToken(token);

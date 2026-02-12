@@ -11,6 +11,13 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      '/api/gateio': {
+        target: 'https://api.gateio.ws',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/gateio/, ''),
+      },
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {

@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Copy, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { mockAccount } from '@/lib/mockData';
 import Uik from '@reef-chain/ui-kit';
  
 interface AccountModalProps {
@@ -72,7 +71,7 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
                     {address ? truncateAddress(address) : truncateAddress(mockAccount.evmAddress)}
                    </span>
                    <button
-                     onClick={() => copyToClipboard(address || mockAccount.evmAddress, 'EVM address')}
+                     onClick={() => copyToClipboard(address || '', 'EVM address')}
                      className="text-muted-foreground hover:text-foreground"
                    >
                      <Copy className="w-3 h-3" />
@@ -80,7 +79,7 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
                  </div>
  
                  <a
-                   href={`https://testnet.reefscan.com/account/${address || mockAccount.evmAddress}`}
+                   href={`https://testnet.reefscan.com/account/${address || ''}`}
                    target="_blank"
                    rel="noopener noreferrer"
                    className="text-xs text-primary hover:underline flex items-center gap-1"
@@ -92,7 +91,7 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
  
                {/* QR Code placeholder */}
               <div className="w-20 h-20 bg-white rounded-2xl border border-white/70 shadow-sm flex items-center justify-center">
-                <Uik.QRCode value={address || mockAccount.evmAddress} className="w-14 h-14" />
+                <Uik.QRCode value={address || ''} className="w-14 h-14" />
               </div>
             </div>
 

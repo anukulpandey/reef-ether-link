@@ -4,16 +4,16 @@ import AssetTabs from '@/components/reef/AssetTabs';
 import ActivityPanel from '@/components/reef/ActivityPanel';
 import { useAccount } from 'wagmi';
 import UiKit from '@reef-chain/ui-kit';
-import { mockTokens } from '@/lib/mockData';
 import { reefMainnet } from '@/lib/wagmi';
 import { Button } from '@/components/ui/button';
 import { useReefBalance } from '@/hooks/useReefBalance';
+import { useReefPrice } from '@/hooks/useReefPrice';
 
 const Index = () => {
   const { address, isConnected } = useAccount();
   const { balance: reefBalance, isLoading: isBalanceLoading } = useReefBalance(address);
+  const { price: reefPrice } = useReefPrice();
 
-  const reefPrice = mockTokens[0].price;
   const totalUsdValue = reefBalance * reefPrice;
 
   return (
