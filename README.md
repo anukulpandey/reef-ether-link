@@ -51,6 +51,36 @@ The buy page includes:
 - Selected wallet address field.
 - `Purchase` action that initiates the on-ramp flow.
 
+## Screenshots
+
+Place screenshots in `docs/screenshots/` with the filenames below:
+
+- `connect-state.png`
+- `metamask-connect.png`
+- `dashboard.png`
+- `send-modal.png`
+- `buy-page.png`
+
+### Disconnected state
+
+![Disconnected state](docs/screenshots/connect-state.png)
+
+### MetaMask connect approval
+
+![MetaMask connect approval](docs/screenshots/metamask-connect.png)
+
+### Connected dashboard
+
+![Connected dashboard](docs/screenshots/dashboard.png)
+
+### Send REEF modal
+
+![Send REEF modal](docs/screenshots/send-modal.png)
+
+### Buy REEF page
+
+![Buy REEF page](docs/screenshots/buy-page.png)
+
 ## Stack
 
 - Vite
