@@ -1,5 +1,6 @@
 import React from 'react';
 import Uik from '@reef-chain/ui-kit';
+import { useNavigate } from 'react-router-dom';
 import './buy-reef-button.css';
 
 const Shape = (): JSX.Element => (
@@ -232,12 +233,13 @@ C226.3,333.5,225.4,331.3,224.1,329.3z"
 );
 
 const BuyReefButton = () => {
+  const navigate = useNavigate();
 
   return (
     <button
       type="button"
       className="buy-reef-btn"
-      onClick={()=>{}}
+      onClick={() => navigate('/buy')}
     >
       <Uik.ReefSign className="buy-reef-btn__icon" />
       <span className="buy-reef-btn__text">Buy Reef</span>

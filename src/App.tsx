@@ -6,6 +6,7 @@ import { WagmiProvider } from 'wagmi';
 import { config } from '@/lib/wagmi';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Buy from "./pages/Buy";
 import NotFound from "./pages/NotFound";
 import { BalanceVisibilityProvider } from "@/contexts/BalanceVisibilityContext";
 import { ReefStateProvider } from "@/contexts/ReefStateContext";
@@ -23,6 +24,7 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/buy" element={<Buy />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
