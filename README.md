@@ -2,84 +2,62 @@
 
 Reef wallet-style React app for viewing REEF balances, activity, and sending transactions with MetaMask.
 
-## Product walkthrough
+## UI Overview
 
-### 1) Disconnected state (connect prompt)
+### Disconnected state
 
-When no wallet is connected, the app renders a dedicated onboarding state:
+![App disconnected state](docs/screenshots/connect-state.png)
+
+When no wallet is connected, the app shows a clean onboarding view with:
 
 - Header with Reef logo and `Connect Wallet` CTA.
-- Large center card: `Connect to Reef App`.
-- Support text: connect MetaMask to view balances and activity.
-- Trust chips: `Secure`, `Non-custodial`, `Mainnet ready`.
+- Center card with `Connect to Reef App`.
+- Context text for balances, activity, and asset management.
+- Trust chips: `Secure`, `Non-custodial`, and `Mainnet ready`.
 - Bottom-left shortcut: `Add to MetaMask`.
 
-### 2) MetaMask connect approval flow
+### MetaMask connect approval
 
-Clicking `Connect Wallet` opens the MetaMask account permission dialog for the current host (for local dev: `localhost`). The user confirms account access in MetaMask, then the app hydrates wallet data and switches to the connected dashboard.
+![MetaMask approval popup](docs/screenshots/metamask-connect.png)
 
-### 3) Connected dashboard state
+Clicking `Connect Wallet` opens MetaMask account permission for the current host (`localhost` in local development). After approval, the app hydrates balances and activity and moves into the connected wallet view.
 
-After connection, the main wallet dashboard shows:
+### Connected dashboard
 
-- Top-right wallet balance pill (REEF icon + token amount).
-- Account menu/dropdown.
-- Fiat balance summary on the left.
-- `Tokens / NFTs` tab section (REEF token row with fiat + token values).
-- Primary `Send` action for REEF transfers.
-- Activity panel on the right with recent transactions.
-- `Open Explorer` link that routes to the active network explorer.
-- `Buy Reef` card with gradient + decorative SVG background.
+![Connected dashboard view](docs/screenshots/dashboard.png)
 
-### 4) Send REEF modal
+Once connected, the dashboard provides:
 
-From the token row `Send` button:
+- Top-right REEF balance pill and account menu.
+- Fiat balance summary panel.
+- `Tokens / NFTs` tabs with REEF holdings.
+- `Send` action from the token row.
+- Right-side activity feed with recent transfers.
+- `Open Explorer` mapped to the active network explorer.
+- `Buy Reef` quick-access card.
 
-- Opens a centered transfer modal.
-- Includes amount input with `MAX` shortcut and live balance hint.
-- Recipient address input (`0x...` EVM address).
-- Submit action: `Send REEF`.
-- Keeps dashboard context dimmed in the background.
+### Send REEF modal
 
-### 5) Buy REEF page
+![Send REEF modal](docs/screenshots/send-modal.png)
 
-The buy page includes:
+From the token row `Send` action, the modal opens with:
+
+- Amount input with `MAX` shortcut and live balance hint.
+- Recipient input for EVM address (`0x...`).
+- Main submit action: `Send REEF`.
+- Background dimming while preserving dashboard context.
+
+### Buy REEF page
+
+![Buy REEF page](docs/screenshots/buy-page.png)
+
+The buy screen includes:
 
 - Back navigation.
 - Hero card (`Buy Reef`) with animated SVG wave decoration.
 - Amount input in USD.
 - Selected wallet address field.
 - `Purchase` action that initiates the on-ramp flow.
-
-## Screenshots
-
-Place screenshots in `docs/screenshots/` with the filenames below:
-
-- `connect-state.png`
-- `metamask-connect.png`
-- `dashboard.png`
-- `send-modal.png`
-- `buy-page.png`
-
-### Disconnected state
-
-![Disconnected state](docs/screenshots/connect-state.png)
-
-### MetaMask connect approval
-
-![MetaMask connect approval](docs/screenshots/metamask-connect.png)
-
-### Connected dashboard
-
-![Connected dashboard](docs/screenshots/dashboard.png)
-
-### Send REEF modal
-
-![Send REEF modal](docs/screenshots/send-modal.png)
-
-### Buy REEF page
-
-![Buy REEF page](docs/screenshots/buy-page.png)
 
 ## Stack
 
