@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     proxy: {
+      '/api/reef-rpc': {
+        target: 'http://localhost:8545',
+        changeOrigin: true,
+      },
       '/api/gateio': {
         target: 'https://api.gateio.ws',
         changeOrigin: true,

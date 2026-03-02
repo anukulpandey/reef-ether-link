@@ -2,8 +2,8 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Copy, ExternalLink } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import Uik from '@reef-chain/ui-kit';
+import { useReefExplorer } from '@/hooks/useReefExplorer';
  
 interface AccountModalProps {
   isOpen: boolean;
@@ -14,22 +14,21 @@ interface AccountModalProps {
 }
 
 const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: AccountModalProps) => {
-  const { toast } = useToast();
+  const { accountExplorerUrl } = useReefExplorer(address);
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    Uik.notify.success({
+      message: `Copied!\n${label} copied to clipboard`,
+    });
+  };
  
-   const copyToClipboard = (text: string, label: string) => {
-     navigator.clipboard.writeText(text);
-     toast({
-       title: 'Copied!',
-       description: `${label} copied to clipboard`,
-     });
-   };
+  const truncateAddress = (addr: string, start = 6, end = 4) => {
+    if (!addr) return '';
+    return `${addr.slice(0, start)}...${addr.slice(-end)}`;
+  };
  
-   const truncateAddress = (addr: string, start = 6, end = 4) => {
-     if (!addr) return '';
-     return `${addr.slice(0, start)}...${addr.slice(-end)}`;
-   };
- 
-   return (
+  return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl bg-[#f6f3fb] rounded-3xl border-0 p-0 overflow-hidden shadow-2xl">
         {/* Header */}
@@ -60,36 +59,36 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
               {/* Avatar */}
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-reef-purple via-reef-pink to-accent flex-shrink-0" />
  
-               {/* Account Info */}
-               <div className="flex-1 min-w-0">
+              {/* Account Info */}
+              <div className="flex-1 min-w-0">
                 <h4 className="font-semibold text-foreground mb-2">Account</h4>
  
                 {/* EVM Address */}
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs text-muted-foreground">EVM:</span>
                   <span className="text-xs font-mono text-foreground">
-                    {address ? truncateAddress(address) : truncateAddress(mockAccount.evmAddress)}
-                   </span>
-                   <button
-                     onClick={() => copyToClipboard(address || '', 'EVM address')}
-                     className="text-muted-foreground hover:text-foreground"
-                   >
-                     <Copy className="w-3 h-3" />
-                   </button>
-                 </div>
+                    {address ? truncateAddress(address) : ""}
+                  </span>
+                  <button
+                    onClick={() => copyToClipboard(address || '', 'EVM address')}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Copy className="w-3 h-3" />
+                  </button>
+                </div>
  
-                 <a
-                   href={`https://testnet.reefscan.com/account/${address || ''}`}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="text-xs text-primary hover:underline flex items-center gap-1"
-                 >
-                   Open in Explorer
-                   <ExternalLink className="w-3 h-3" />
-                 </a>
-               </div>
+                <a
+                  href={accountExplorerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-primary hover:underline flex items-center gap-1"
+                >
+                  Open in Explorer
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
  
-               {/* QR Code placeholder */}
+              {/* QR Code placeholder */}
               <div className="w-20 h-20 bg-white rounded-2xl border border-white/70 shadow-sm flex items-center justify-center">
                 <Uik.QRCode value={address || ''} className="w-14 h-14" />
               </div>
@@ -107,8 +106,8 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
           </div>
         </div>
       </DialogContent>
-     </Dialog>
-   );
- };
+    </Dialog>
+  );
+};
  
- export default AccountModal;
+export default AccountModal;

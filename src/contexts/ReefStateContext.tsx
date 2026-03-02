@@ -11,7 +11,7 @@ export const ReefStateProvider = ({ children }: { children: React.ReactNode }) =
   const [isReefReady, setIsReefReady] = useState(false);
 
   useEffect(() => {
-    initReefState(NETWORK_CONFIGS[NetworkType.ReefMainnet])
+    initReefState(NETWORK_CONFIGS[NetworkType.ReefLocalhost])
       .then(() => setIsReefReady(true))
       .catch((err) => console.error('Failed to initialize reef state:', err));
   }, []);

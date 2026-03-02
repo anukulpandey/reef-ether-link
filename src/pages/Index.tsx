@@ -73,8 +73,7 @@ const Index = () => {
       {!isConnected && (
         <footer className="fixed bottom-0 left-0 right-0 bg-[#f2f0f8] border-t border-border px-6 py-3">
           <Button
-            className="rounded-full bg-white/70 text-[#5d3bad] hover:bg-white/90 shadow-sm text-sm font-medium px-4 py-2 h-auto"
-            variant="ghost"
+            className="rounded-full bg-white/70 text-[#5d3bad] hover:bg-white hover:text-[#5d3bad] hover:scale-105 hover:shadow-md active:scale-95 shadow-sm text-sm font-medium px-4 py-2 h-auto transition-all duration-200 ease-out"
             onClick={async () => {
               const provider = (window as any).ethereum;
               if (!provider) return;

@@ -68,7 +68,7 @@ const Header = () => {
            ) : (
             <Button
               onClick={() => connect({ connector: metaMask() })}
-              className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white rounded-[12px] px-6"
+              className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white rounded-[12px] px-6 hover:scale-105 hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200 ease-out"
             >
               Connect Wallet
             </Button>

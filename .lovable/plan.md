@@ -43,7 +43,7 @@ A Web3 wallet dashboard that replicates the Reef UI, connects to MetaMask via wa
 ## 🔗 Wallet Connection (wagmi + MetaMask)
 
 ### Technical Setup
-- Configure wagmi with your custom Reef Testnet RPC: `http://reeftestnet1-reefethrpc-dab87f-72-60-35-83.traefik.me/`
+- Configure wagmi with your custom Reef Testnet RPC: `http://localhost:8545`
 - Define Reef Testnet as a custom chain (Chain ID 13939)
 - MetaMask connector for browser wallet connection
 

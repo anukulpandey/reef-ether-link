@@ -1,6 +1,5 @@
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
 import { type Token } from '@/lib/mockData';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
@@ -16,7 +15,6 @@ interface SendModalProps {
 }
 
 const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
-  const { toast } = useToast();
   const [recipient, setRecipient] = useState('');
   const [amount, setAmount] = useState('');
   const { showBalances } = useBalanceVisibility();
@@ -37,9 +35,8 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
 
   useEffect(() => {
     if (isConfirmed && txHash) {
-      toast({
-        title: 'Transaction Confirmed',
-        description: `Sent ${amount} ${token?.symbol}. Tx: ${txHash.slice(0, 10)}...`,
+      UiKit.notify.success({
+        message: `Transaction Confirmed\nSent ${amount} ${token?.symbol}. Tx: ${txHash.slice(0, 10)}...`,
       });
       setRecipient('');
       setAmount('');
@@ -54,7 +51,9 @@ const SendModal = ({ isOpen, onClose, token }: SendModalProps) => {
       const msg = error.message?.includes('User rejected')
         ? 'Transaction rejected by user'
         : error.message?.split('\n')[0] || 'Transaction failed';
-      toast({ title: 'Transaction Failed', description: msg, variant: 'destructive' });
+      UiKit.notify.danger({
+        message: `Transaction Failed\n${msg}`,
+      });
       reset();
     }
   }, [sendError, confirmError]);
