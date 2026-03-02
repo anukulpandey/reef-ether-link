@@ -49,7 +49,11 @@ const ActivityPanel = () => {
                 rel="noopener noreferrer"
                 className="block"
               >
-                <div className="flex cursor-pointer items-center justify-between px-6 py-5 transition-colors hover:bg-[#f3f4f7]">
+                <div
+                  className={`flex cursor-pointer items-center justify-between px-6 py-5 transition-colors hover:bg-[#f3f4f7] ${
+                    index === 0 ? 'rounded-t-3xl' : ''
+                  } ${index === transactions.length - 1 ? 'rounded-b-3xl' : ''}`}
+                >
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-[#eef0f5] flex items-center justify-center">
                       {tx.type === 'sent' ? (
