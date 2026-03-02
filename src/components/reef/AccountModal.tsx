@@ -3,7 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Copy, ExternalLink } from 'lucide-react';
 import Uik from '@reef-chain/ui-kit';
+import { NetworkType } from 'reef-evm-util-lib';
 import { useReefExplorer } from '@/hooks/useReefExplorer';
+import { useReefState } from '@/contexts/ReefStateContext';
  
 interface AccountModalProps {
   isOpen: boolean;
@@ -15,6 +17,8 @@ interface AccountModalProps {
 
 const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: AccountModalProps) => {
   const { accountExplorerUrl } = useReefExplorer(address);
+  const { selectedNetwork, setSelectedNetwork } = useReefState();
+  const isDevelopment = selectedNetwork === NetworkType.ReefLocalhost;
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -45,9 +49,13 @@ const AccountModal = ({ isOpen, onClose, onLogout, address, walletName }: Accoun
               </Button>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Mainnet</span>
-              <Switch />
-              <span className="text-sm font-medium text-primary">Testnet</span>
+              <span className={`text-sm ${isDevelopment ? 'text-muted-foreground' : 'font-medium text-primary'}`}>Mainnet</span>
+              <Switch
+                checked={isDevelopment}
+                onCheckedChange={(checked) =>
+                  setSelectedNetwork(checked ? NetworkType.ReefLocalhost : NetworkType.ReefMainnet)}
+              />
+              <span className={`text-sm ${isDevelopment ? 'font-medium text-primary' : 'text-muted-foreground'}`}>Development</span>
             </div>
           </div>
         </div>

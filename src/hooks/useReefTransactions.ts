@@ -15,7 +15,7 @@ export interface ReefTransaction {
 }
 
 export function useReefTransactions(address: string | undefined) {
-  const { isReefReady } = useReefState();
+  const { isReefReady, selectedNetwork } = useReefState();
   const [transactions, setTransactions] = useState<ReefTransaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -68,7 +68,7 @@ export function useReefTransactions(address: string | undefined) {
       cancelled = true;
       clearInterval(interval);
     };
-  }, [address, isReefReady]);
+  }, [address, isReefReady, selectedNetwork]);
 
   return { transactions, isLoading };
 }

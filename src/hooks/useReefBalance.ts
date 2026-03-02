@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getNetwork } from 'reef-evm-util-lib';
 import { useReefState } from '@/contexts/ReefStateContext';
 
 const REEF_DECIMALS = 18;
@@ -10,8 +11,20 @@ type JsonRpcResponse<T> = {
   error?: { message?: string };
 };
 
+const getRpcUrl = () => {
+  try {
+    const networkRpcUrl = getNetwork().evmRpcUrl;
+    if (!networkRpcUrl) return REEF_RPC_URL;
+    // Keep localhost calls behind Vite proxy to avoid browser CORS preflight failures.
+    if (networkRpcUrl.includes('localhost')) return REEF_RPC_URL;
+    return networkRpcUrl;
+  } catch {
+    return REEF_RPC_URL;
+  }
+};
+
 async function getRpcBalance(address: string): Promise<bigint> {
-  const response = await fetch(REEF_RPC_URL, {
+  const response = await fetch(getRpcUrl(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -38,7 +51,7 @@ async function getRpcBalance(address: string): Promise<bigint> {
 }
 
 export function useReefBalance(address: string | undefined) {
-  const { isReefReady } = useReefState();
+  const { isReefReady, selectedNetwork } = useReefState();
   const [balance, setBalance] = useState<number>(0);
   const [hasFetched, setHasFetched] = useState(false);
 
@@ -46,6 +59,7 @@ export function useReefBalance(address: string | undefined) {
     if (!address || !isReefReady) return;
 
     let cancelled = false;
+    setHasFetched(false);
 
     const fetchBalance = async () => {
       try {
@@ -69,7 +83,7 @@ export function useReefBalance(address: string | undefined) {
       cancelled = true;
       clearInterval(interval);
     };
-  }, [address, isReefReady]);
+  }, [address, isReefReady, selectedNetwork]);
 
   const isLoading = !!address && !hasFetched;
 
