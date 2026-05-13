@@ -5,13 +5,14 @@ import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
 import { useAccount } from 'wagmi';
 import { useReefTransactions } from '@/hooks/useReefTransactions';
 import { useReefExplorer } from '@/hooks/useReefExplorer';
+import { getExplorerTxUrl } from '@/lib/reefNetwork';
 
 const ActivityPanel = () => {
   const { showBalances } = useBalanceVisibility();
   const { address } = useAccount();
   const { transactions, isLoading } = useReefTransactions(address);
   const { explorerUrl } = useReefExplorer(address);
-  const txExplorerUrl = (hash: string) => `${explorerUrl}/tx/${encodeURIComponent(hash)}`;
+  const txExplorerUrl = (hash: string) => getExplorerTxUrl(explorerUrl, hash);
 
   const formatAmount = (value: number) =>
     new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);

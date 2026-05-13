@@ -27,9 +27,9 @@ export function useReefTransactions(address: string | undefined) {
     const fetchTransactions = async () => {
       setIsLoading(true);
       try {
-        const blockExplorerUrl = getNetwork().blockExplorerUrl;
+        const explorerApiUrl = getNetwork().blockExplorerUrl;
         const res = await fetch(
-          `${blockExplorerUrl}/api/v2/addresses/${address}/transactions`,
+          `${explorerApiUrl}/api/v2/addresses/${address}/transactions`,
           { headers: { accept: 'application/json' } },
         );
         const data = await res.json();

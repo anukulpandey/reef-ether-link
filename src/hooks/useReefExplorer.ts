@@ -1,43 +1,53 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getNetwork, network$ } from 'reef-evm-util-lib';
+import { getNetwork, network$, NetworkType, type NetworkConfig } from 'reef-evm-util-lib';
 import { useReefState } from '@/contexts/ReefStateContext';
+import {
+  REEF_MAINNET_EXPLORER_URL,
+  getExplorerAddressUrl,
+  normalizeExplorerUrl,
+} from '@/lib/reefNetwork';
 
-const FALLBACK_EXPLORER_URL = 'https://reefscan.com';
+const FALLBACK_EXPLORER_URL = REEF_MAINNET_EXPLORER_URL;
 
-const normalizeExplorerUrl = (url?: string | null) => {
-  if (!url) return FALLBACK_EXPLORER_URL;
-  return url.replace(/\/+$/, '');
+const resolveExplorerUrl = (
+  selectedNetwork: string,
+  network?: NetworkConfig | null,
+) => {
+  if (selectedNetwork === NetworkType.ReefMainnet) {
+    return REEF_MAINNET_EXPLORER_URL;
+  }
+
+  return normalizeExplorerUrl(network?.blockExplorerUrl, FALLBACK_EXPLORER_URL);
 };
 
-const getCurrentExplorerUrl = () => {
+const getCurrentExplorerUrl = (selectedNetwork: string) => {
   try {
-    return normalizeExplorerUrl(getNetwork().blockExplorerUrl);
+    return resolveExplorerUrl(selectedNetwork, getNetwork());
   } catch {
     return FALLBACK_EXPLORER_URL;
   }
 };
 
 export function useReefExplorer(address?: string) {
-  const { isReefReady } = useReefState();
+  const { isReefReady, selectedNetwork } = useReefState();
   const [explorerUrl, setExplorerUrl] = useState(FALLBACK_EXPLORER_URL);
 
   useEffect(() => {
     if (!isReefReady) return;
 
-    setExplorerUrl(getCurrentExplorerUrl());
+    setExplorerUrl(getCurrentExplorerUrl(selectedNetwork));
 
     const subscription = network$.subscribe((network) => {
-      setExplorerUrl(normalizeExplorerUrl(network?.blockExplorerUrl));
+      setExplorerUrl(resolveExplorerUrl(selectedNetwork, network));
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [isReefReady]);
+  }, [isReefReady, selectedNetwork]);
 
   const accountExplorerUrl = useMemo(() => {
-    if (!address) return explorerUrl;
-    return `${explorerUrl}/account/${address}`;
+    return getExplorerAddressUrl(explorerUrl, address);
   }, [address, explorerUrl]);
 
   return {

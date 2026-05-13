@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { initReefState, NETWORK_CONFIGS, NetworkType } from 'reef-evm-util-lib';
+import { NETWORK_CONFIGS, NetworkType, network$, type NetworkConfig } from 'reef-evm-util-lib';
+import { REEF_MAINNET_API_URL, REEF_MAINNET_RPC_TARGET } from '@/lib/reefNetwork';
 
 type ReefNetwork = typeof NetworkType.ReefMainnet | typeof NetworkType.ReefLocalhost;
 
@@ -10,17 +11,36 @@ type ReefStateContextValue = {
   setSelectedNetwork: (network: ReefNetwork) => void;
 };
 
-const DEFAULT_NETWORK = NetworkType.ReefLocalhost;
+const DEFAULT_NETWORK = NetworkType.ReefMainnet;
 const NETWORK_STORAGE_KEY = 'reef:selected-network';
+const NETWORK_PREFERENCE_SET_KEY = 'reef:selected-network-explicit';
 const NETWORK_CHANGE_SIGNAL_KEY = 'reef:network-change-signal';
-const REEF_INIT_TIMEOUT_MS = 8_000;
+const REEF_MAINNET_CONFIG: NetworkConfig = {
+  ...NETWORK_CONFIGS[NetworkType.ReefMainnet],
+  substrateWsRpcUrl: 'https://rpc.reefscan.com',
+  substrateRpcUrl: 'https://rpc.reefscan.com',
+  evmRpcUrl: REEF_MAINNET_RPC_TARGET,
+  blockExplorerUrl: REEF_MAINNET_API_URL,
+};
+const APP_NETWORK_CONFIGS: Record<ReefNetwork, NetworkConfig> = {
+  [NetworkType.ReefMainnet]: REEF_MAINNET_CONFIG,
+  [NetworkType.ReefLocalhost]: NETWORK_CONFIGS[NetworkType.ReefLocalhost],
+};
 
 const getInitialNetwork = (): ReefNetwork => {
   if (typeof window === 'undefined') return DEFAULT_NETWORK;
   const stored = window.localStorage.getItem(NETWORK_STORAGE_KEY);
-  if (stored === NetworkType.ReefMainnet || stored === NetworkType.ReefLocalhost) {
+  const hasExplicitPreference = window.localStorage.getItem(NETWORK_PREFERENCE_SET_KEY) === '1';
+
+  if (stored === NetworkType.ReefMainnet) {
     return stored;
   }
+
+  // Migrate legacy installs that persisted the old localhost default automatically.
+  if (stored === NetworkType.ReefLocalhost && hasExplicitPreference) {
+    return stored;
+  }
+
   return DEFAULT_NETWORK;
 };
 
@@ -42,6 +62,7 @@ export const ReefStateProvider = ({ children }: { children: React.ReactNode }) =
 
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(NETWORK_STORAGE_KEY, network);
+        window.localStorage.setItem(NETWORK_PREFERENCE_SET_KEY, '1');
         window.localStorage.setItem(NETWORK_CHANGE_SIGNAL_KEY, `${Date.now()}:${network}`);
         // Force a full refresh so all screens/hooks reset against the new network.
         window.setTimeout(() => window.location.reload(), 25);
@@ -67,38 +88,21 @@ export const ReefStateProvider = ({ children }: { children: React.ReactNode }) =
   }, []);
 
   useEffect(() => {
-    let active = true;
     setIsReefReady(false);
     setIsSwitchingNetwork(true);
 
-    const initPromise = Promise.race([
-      initReefState(NETWORK_CONFIGS[selectedNetwork]),
-      new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Reef network initialization timed out')), REEF_INIT_TIMEOUT_MS);
-      }),
-    ]);
-
-    initPromise
-      .then(() => {
-        if (!active) return;
-        setIsReefReady(true);
-        if (typeof window !== 'undefined') {
-          window.localStorage.setItem(NETWORK_STORAGE_KEY, selectedNetwork);
-        }
-      })
-      .catch((err) => {
-        if (!active) return;
-        console.error('Failed to initialize reef state:', err);
-      })
-      .finally(() => {
-        if (active) {
-          setIsSwitchingNetwork(false);
-        }
-      });
-
-    return () => {
-      active = false;
-    };
+    try {
+      // Use app-owned network config until the upstream library release is published.
+      network$.next(APP_NETWORK_CONFIGS[selectedNetwork]);
+      setIsReefReady(true);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(NETWORK_STORAGE_KEY, selectedNetwork);
+      }
+    } catch (err) {
+      console.error('Failed to initialize reef network:', err);
+    } finally {
+      setIsSwitchingNetwork(false);
+    }
   }, [selectedNetwork]);
 
   const value = useMemo(
