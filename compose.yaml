@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reef-ether-link
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      VITE_REEF_RPC_URL: /api/reef-rpc
+      VITE_REEF_EXPLORER_API_URL: http://reef-explorer-ipwkoo-6aeed5-72-60-35-83.sslip.io/
+      VITE_REEF_EXPLORER_URL: https://reefscan.com
+    ports:
+      - "8080:8080"
