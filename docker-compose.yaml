@@ -7,7 +7,8 @@ services:
     environment:
       NODE_ENV: development
       VITE_REEF_RPC_URL: /api/reef-rpc
-      VITE_REEF_EXPLORER_API_URL: http://reef-explorer-ipwkoo-6aeed5-72-60-35-83.sslip.io/
+      VITE_REEF_RPC_TARGET: https://eth.reef-node-reefdevcluster-808c46-72-60-35-83.nip.io/
+      VITE_REEF_EXPLORER_API_URL: https://explorer-backend-sij6uw-1d3882-72-60-35-83.nip.io
       VITE_REEF_EXPLORER_URL: https://reefscan.com
     expose:
       - "43173"

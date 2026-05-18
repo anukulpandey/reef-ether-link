@@ -1,12 +1,12 @@
 const trimTrailingSlash = (url: string) => url.replace(/\/+$/, '');
 
 export const REEF_MAINNET_RPC_TARGET = trimTrailingSlash(
-  import.meta.env.VITE_REEF_RPC_TARGET || 'http://eth.reef-node-reefdevcluster-808c46-72-60-35-83.sslip.io/',
+  import.meta.env.VITE_REEF_RPC_TARGET || 'https://eth.reef-node-reefdevcluster-808c46-72-60-35-83.nip.io/',
 );
 
 export const REEF_MAINNET_API_URL = trimTrailingSlash(
   import.meta.env.VITE_REEF_EXPLORER_API_URL ||
-    'http://reef-explorer-ipwkoo-6aeed5-72-60-35-83.sslip.io/',
+    'https://explorer-backend-sij6uw-1d3882-72-60-35-83.nip.io',
 );
 
 export const REEF_MAINNET_EXPLORER_URL = trimTrailingSlash(
