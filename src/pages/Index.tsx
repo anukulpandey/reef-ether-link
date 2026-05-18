@@ -4,13 +4,13 @@ import AssetTabs from '@/components/reef/AssetTabs';
 import ActivityPanel from '@/components/reef/ActivityPanel';
 import { useAccount } from 'wagmi';
 import UiKit from '@reef-chain/ui-kit';
-import { reefMainnet } from '@/lib/wagmi';
 import { Button } from '@/components/ui/button';
 import { useReefBalance } from '@/hooks/useReefBalance';
 import { useReefPrice } from '@/hooks/useReefPrice';
+import { requestAddReefNetwork } from '@/lib/wallets';
 
 const Index = () => {
-  const { address, isConnected } = useAccount();
+  const { address, connector, isConnected } = useAccount();
   const { balance: reefBalance, isLoading: isBalanceLoading } = useReefBalance(address);
   const { price: reefPrice } = useReefPrice();
 
@@ -57,7 +57,7 @@ const Index = () => {
               </div>
               <h2 className="text-3xl font-semibold text-[#1b1530]">Connect to Reef App</h2>
               <p className="mt-2 text-base text-[#8e899c]">
-                Connect MetaMask to view balances, activity, and manage your assets.
+                Connect an EVM wallet like Zerion, MetaMask, Rabby, or another compatible browser wallet to view balances, activity, and manage your assets.
               </p>
               <div className="mt-6 flex items-center gap-3 text-sm text-[#8e899c]">
                 <span className="rounded-full bg-white/70 px-3 py-1">Secure</span>
@@ -75,22 +75,25 @@ const Index = () => {
           <Button
             className="rounded-full bg-white/70 text-[#5d3bad] hover:bg-white hover:text-[#5d3bad] hover:scale-105 hover:shadow-md active:scale-95 shadow-sm text-sm font-medium px-4 py-2 h-auto transition-all duration-200 ease-out"
             onClick={async () => {
-              const provider = (window as any).ethereum;
-              if (!provider) return;
-              await provider.request({
-                method: 'wallet_addEthereumChain',
-                params: [{
-                  chainId: `0x${reefMainnet.id.toString(16)}`,
-                  chainName: reefMainnet.name,
-                  nativeCurrency: reefMainnet.nativeCurrency,
-                  rpcUrls: reefMainnet.rpcUrls.default.http,
-                  blockExplorerUrls: [reefMainnet.blockExplorers.default.url],
-                }],
-              });
+              try {
+                await requestAddReefNetwork(connector);
+                UiKit.notify.success({
+                  message: 'Reef network added to your wallet',
+                });
+              } catch (error) {
+                const message =
+                  error instanceof Error && error.message
+                    ? error.message
+                    : 'Open a compatible EVM wallet and try again';
+
+                UiKit.notify.danger({
+                  message,
+                });
+              }
             }}
           >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="" className="h-4 w-4 mr-1.5" />
-            Add to MetaMask
+            <UiKit.ReefIcon className="mr-1.5 h-4 w-4" />
+            Add Reef Network
           </Button>
         </footer>
       )}

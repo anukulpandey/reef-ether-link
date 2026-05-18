@@ -1,18 +1,19 @@
 import { ChevronDown } from 'lucide-react';
- import { Button } from '@/components/ui/button';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { metaMask } from 'wagmi/connectors';
+import { Button } from '@/components/ui/button';
+import { useAccount, useDisconnect } from 'wagmi';
 import { useState } from 'react';
 import AccountModal from './AccountModal';
-import UiKit from "@reef-chain/ui-kit";
+import WalletConnectDialog from './WalletConnectDialog';
+import UiKit from '@reef-chain/ui-kit';
 import { useBalanceVisibility } from '@/contexts/BalanceVisibilityContext';
 import { useReefBalance } from '@/hooks/useReefBalance';
+import { getWalletDisplayName } from '@/lib/wallets';
 
 const Header = () => {
   const { address, isConnected, connector } = useAccount();
-  const { connect } = useConnect();
   const { disconnect } = useDisconnect();
-   const [showAccountModal, setShowAccountModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
+  const [showWalletConnectDialog, setShowWalletConnectDialog] = useState(false);
   const { showBalances } = useBalanceVisibility();
   const { balance, isLoading: isBalanceLoading } = useReefBalance(address);
 
@@ -66,8 +67,8 @@ const Header = () => {
  
              </>
            ) : (
-            <Button
-              onClick={() => connect({ connector: metaMask() })}
+           <Button
+              onClick={() => setShowWalletConnectDialog(true)}
               className="bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white rounded-[12px] px-6 hover:scale-105 hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200 ease-out"
             >
               Connect Wallet
@@ -76,11 +77,16 @@ const Header = () => {
          </div>
        </header>
  
+      <WalletConnectDialog
+        open={showWalletConnectDialog}
+        onOpenChange={setShowWalletConnectDialog}
+      />
+
       <AccountModal
         isOpen={showAccountModal}
         onClose={() => setShowAccountModal(false)}
         address={address}
-        walletName={connector?.name}
+        walletName={getWalletDisplayName(connector?.name)}
         onLogout={disconnect}
       />
      </>

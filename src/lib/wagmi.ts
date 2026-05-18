@@ -1,6 +1,6 @@
 import { http, createConfig } from 'wagmi';
 import { defineChain } from 'viem';
-import { metaMask } from 'wagmi/connectors';
+import { injected, metaMask } from 'wagmi/connectors';
 import { REEF_MAINNET_EXPLORER_URL, REEF_MAINNET_RPC_TARGET } from '@/lib/reefNetwork';
 
 const DEFAULT_REEF_RPC_URL = '/api/reef-rpc';
@@ -26,7 +26,7 @@ export const reefMainnet = defineChain({
 
 export const config = createConfig({
   chains: [reefMainnet],
-  connectors: [metaMask()],
+  connectors: [injected({ shimDisconnect: true }), metaMask()],
   transports: {
     [reefMainnet.id]: http(reefRpcTransportUrl),
   },

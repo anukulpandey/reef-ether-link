@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Uik from '@reef-chain/ui-kit';
-import { useAccount, useConnect } from 'wagmi';
-import { metaMask } from 'wagmi/connectors';
+import { useAccount } from 'wagmi';
 import { Button } from '@/components/ui/button';
+import WalletConnectDialog from '@/components/reef/WalletConnectDialog';
 import './buy.css';
 
 const ALCHEMY_PAY_ENDPOINT = 'https://api.reefscan.com/alchemy-pay/signature';
@@ -32,12 +32,12 @@ const HeroShape = () => (
 
 const Buy = () => {
   const { address, isConnected } = useAccount();
-  const { connect } = useConnect();
   const [amount, setAmount] = useState('15');
   const [error, setError] = useState('');
   const [alchemyPayUrl, setAlchemyPayUrl] = useState<string>();
   const [isIframeLoading, setIsIframeLoading] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+  const [showWalletConnectDialog, setShowWalletConnectDialog] = useState(false);
 
   const requestAlchemyPayUrl = async () => {
     const numericAmount = Number(amount);
@@ -46,7 +46,7 @@ const Buy = () => {
       return;
     }
     if (!address) {
-      setError('Connect MetaMask first');
+      setError('Connect an EVM wallet first');
       return;
     }
 
@@ -143,7 +143,7 @@ const Buy = () => {
               {!isConnected ? (
                 <Button
                   className="w-full rounded-xl bg-gradient-to-r from-[#a93185] to-[#5d3bad] text-white"
-                  onClick={() => connect({ connector: metaMask() })}
+                  onClick={() => setShowWalletConnectDialog(true)}
                 >
                   Connect Wallet
                 </Button>
@@ -200,6 +200,13 @@ const Buy = () => {
           )}
         </div>
       </div>
+
+      <WalletConnectDialog
+        open={showWalletConnectDialog}
+        onOpenChange={setShowWalletConnectDialog}
+        title="Connect an EVM wallet"
+        description="Choose a wallet to continue with Reef. Zerion, MetaMask, Rabby, and other injected EVM wallets are supported."
+      />
     </div>
   );
 };
