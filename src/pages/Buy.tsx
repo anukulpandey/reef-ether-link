@@ -4,8 +4,9 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import Uik from '@reef-chain/ui-kit';
 import { useAccount } from 'wagmi';
 import { Button } from '@/components/ui/button';
+import ReefWaveShape from '@/components/reef/ReefWaveShape';
 import WalletConnectDialog from '@/components/reef/WalletConnectDialog';
-import './buy.css';
+import '@/components/reef/reef-wave-surface.css';
 
 const ALCHEMY_PAY_ENDPOINT = 'https://api.reefscan.com/alchemy-pay/signature';
 const MIN_AMOUNT = 15;
@@ -17,18 +18,6 @@ const getErrorMessage = (error: unknown) => {
   }
   return 'Failed to initialize purchase';
 };
-
-const HeroShape = () => (
-  <svg
-    viewBox="0 0 1200 280"
-    xmlns="http://www.w3.org/2000/svg"
-    className="buy-hero__shape"
-    aria-hidden="true"
-  >
-    <path d="M0 182C96 138 192 242 288 198C384 154 480 120 576 162C672 204 768 246 864 206C960 166 1056 136 1200 182V280H0V182Z" />
-    <path className="buy-hero__shape-secondary" d="M0 214C86 186 172 252 258 226C344 200 430 166 516 186C602 206 688 260 774 238C860 216 946 176 1032 186C1118 196 1162 220 1200 236V280H0V214Z" />
-  </svg>
-);
 
 const Buy = () => {
   const { address, isConnected } = useAccount();
@@ -106,12 +95,12 @@ const Buy = () => {
           </Link>
         </div>
 
-        <div className="buy-hero rounded-3xl bg-gradient-to-r from-[#a93185] to-[#5d3bad] p-8 text-white shadow-xl">
-          <div className="buy-hero__content">
+        <div className="reef-wave-surface rounded-3xl bg-gradient-to-r from-[#a93185] to-[#5d3bad] p-8 text-white shadow-xl">
+          <div className="reef-wave-surface__content">
             <h1 className="text-3xl font-semibold">Buy Reef</h1>
             <p className="mt-2 text-white/90">Top up your Reef wallet in a few clicks.</p>
           </div>
-          <HeroShape />
+          <ReefWaveShape className="reef-wave-surface__shape" />
         </div>
 
         <div className="mt-6 rounded-3xl bg-white p-6 shadow-sm">
